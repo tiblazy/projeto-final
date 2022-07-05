@@ -2,6 +2,9 @@ import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { baseAPI } from "../../apis/api";
+import { setUserToken } from "../../constants/localStorages";
+import ROUTES from "../../constants/routes";
 
 export const UsersContext = createContext();
 
@@ -13,14 +16,12 @@ export const UsersProvider = ({ children }) => {
 
   function login() {
     axios
-      .post(`https://projeto-final-m3.herokuapp.com/login`, {
+      .post(`${baseAPI}/login`, {
         email,
         password,
       })
       .then((res) => {
-        console.log(res.data);
-
-        localStorage.setItem("@token", JSON.stringify(res.data));
+        setUserToken(res.data.accessToken);
 
         toast.success("Login realizado com sucesso!", {
           position: "top-right",
@@ -30,7 +31,7 @@ export const UsersProvider = ({ children }) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          onClose: navigate("/dashboard"),
+          onClose: navigate(ROUTES.dashboard),
         });
       })
       .catch((err) => {
