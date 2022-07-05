@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { baseAPI } from "../../apis/api";
 import { setUserToken } from "../../constants/localStorages";
+import ROUTES from "../../constants/routes";
 
 export const UsersContext = createContext();
 
@@ -30,7 +31,7 @@ export const UsersProvider = ({ children }) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          onClose: navigate("/dashboard"),
+          onClose: navigate(ROUTES.dashboard),
         });
       })
       .catch((err) => {
