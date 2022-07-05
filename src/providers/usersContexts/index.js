@@ -113,7 +113,7 @@ export const UsersProvider = ({ children }) => {
 
       const response = await baseAPI.post("/users", newUser);
       const redirect = await baseAPI.post("/login", response.data.accessToken);
-
+      
       setUserToken(redirect.data.accessToken);
       if (getUserToken) {
         toastSuccess(
