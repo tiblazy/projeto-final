@@ -121,8 +121,8 @@ export const UsersProvider = ({ children }) => {
           ROUTES.dashboard
         );
       }
-    } catch (err) {
-      toastError(err.message);
+    } catch (error) {
+      toastError(error.message);
     } finally {
       setLoading(false);
     }
