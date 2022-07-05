@@ -36,7 +36,7 @@ export const UsersProvider = ({ children }) => {
       .catch((err) => {
         console.log(err);
 
-        toast.error("Login falhou, verifique seu email ou senha", {
+        toast.error("Login falhou, verifique seu email ou senha!", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
