@@ -102,19 +102,10 @@ export const UsersProvider = ({ children }) => {
         .slice(0, 1)
         .toUpperCase()}-${data.password.slice(0, 2)}`;
 
-      const newUser = {
-        username: data.nome,
-        email: data.email,
-        password: data.senha,
-
-        userhash: hash,
-        myTables: [],
-      };
-
-      const response = await baseAPI.post("/users", newUser);
+      const response = await baseAPI.post("/users", data);
       setUserToken(response.data.accessToken);
       // const redirect = await baseAPI.post("/login", response.data.accessToken);
-      
+
       if (getUserToken) {
         toastSuccess(
           "Usuário criado com sucesso, redirecionando....",
