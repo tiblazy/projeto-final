@@ -1,10 +1,13 @@
 import { UsersProvider } from "../usersContexts";
 import { TablesProvider } from "../tablesContexts";
+import { CharacterProvider } from "../characterContexts";
 
 const Providers = ({ children }) => {
   return (
     <UsersProvider>
-      <TablesProvider>{children}</TablesProvider>
+      <TablesProvider>
+        <CharacterProvider>{children}</CharacterProvider>
+      </TablesProvider>
     </UsersProvider>
   );
 };
