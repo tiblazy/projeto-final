@@ -77,7 +77,7 @@ export const UsersProvider = ({ children }) => {
 
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
 
-        // toastSuccess("Login realizado com sucesso!", ROUTES.dashboard);
+        toastSuccess("Login realizado com sucesso!", ROUTES.dashboard);
       })
       .catch((err) => {
         console.log(err);
