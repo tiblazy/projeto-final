@@ -53,7 +53,9 @@ export const TablesProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const response = await baseAPI.post("/tables", data);
+      const response = await baseAPI.post("/tables", data, {
+        headers: { Authorization: `bearer ${getUserToken}` },
+      });
       toastSuccess("Mesa criada com sucesso");
     } catch (error) {
       console.log(error);

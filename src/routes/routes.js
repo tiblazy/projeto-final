@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Routes as Switch, Route } from "react-router-dom";
 
 import Dashboard from "../components/Pages/Dashboard";
@@ -12,7 +11,7 @@ export const Routes = () => {
 
   return (
     <Switch>
-      {/* <Route path={home} element={<Home authenticated={authenticated} />} /> */}
+      <Route path={home} element={<Home />} />
       <Route path={login} element={<Login />} />
       <Route path={register} element={<Register />} />
     </Switch>
