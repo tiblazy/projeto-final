@@ -16,10 +16,6 @@ export const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
   const toastSuccess = (message, route) => {
@@ -50,40 +46,36 @@ export const UsersProvider = ({ children }) => {
   useEffect(() => {
     const autoLogin = async () => {
       try {
-        const token = JSON.parse(getUserToken);
+        // const token = JSON.parse(getUserToken);
 
-        const response = await baseAPI.post(
-          "/login",
-          {},
-          {
-            header: {
-              Authorization: `bearer ${token}`,
-            },
-          }
-        );
+        // console.log(`bearer ${token}`);
 
-        setUser(response.data);
-        navigate(ROUTES.dashboard);
+        // const response = await baseAPI.get("/users", {
+        //   headers: { Authorization: `bearer ${token}` },
+        // });
+        // console.log(response);
+        // setUser(response.data);
+
+        // navigate(ROUTES.dashboard);
       } catch (error) {
-        removeUserToken(userToken);
+        console.log(error);
+        // removeUserToken(userToken);
       }
     };
 
     if (getUserToken) {
       autoLogin();
+      // navigate(ROUTES.dashboard);
     }
   }, []);
 
-  function login() {
+  function login(data, setLoading) {
     baseAPI
-      .post("/login", {
-        email,
-        password,
-      })
+      .post("/login", data)
       .then((res) => {
         console.log(res.data);
 
-        localStorage.setItem(userToken, JSON.stringify(res.data));
+        localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
 
         toastSuccess("Login realizado com sucesso!", ROUTES.dashboard);
       })
@@ -98,13 +90,8 @@ export const UsersProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const hash = `${data.username}#${data.username
-        .slice(0, 1)
-        .toUpperCase()}-${data.password.slice(0, 2)}`;
-
       const response = await baseAPI.post("/users", data);
       setUserToken(response.data.accessToken);
-      // const redirect = await baseAPI.post("/login", response.data.accessToken);
 
       if (getUserToken) {
         toastSuccess(
@@ -120,9 +107,7 @@ export const UsersProvider = ({ children }) => {
   };
 
   return (
-    <UsersContext.Provider
-      value={{ setEmail, setPassword, login, userCreate, user }}
-    >
+    <UsersContext.Provider value={{ login, userCreate, user }}>
       {children}
     </UsersContext.Provider>
   );
