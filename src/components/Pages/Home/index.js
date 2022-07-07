@@ -1,16 +1,26 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-import Cards from "../../Cards";
+import Mesas from "../../Mesas";
 import { Title, Header, TextArea, List } from "./style";
 import { ButtonComponent } from "../../Button/style";
+import { useContext } from "react";
+import { TablesContext } from "../../../providers/tablesContexts";
+import OptionsComponent from "../../Options";
 
 function Home() {
+  const { table } = useContext(TablesContext);
+  console.log(table);
   return (
     <div>
       <Header>
-        <Title>A taverna</Title>
-        <h2>Descobrir</h2>
+        <nav>
+          <Title>A taverna</Title>
+          <OptionsComponent>
+            <ButtonComponent>Cadastro</ButtonComponent>
+            <ButtonComponent>Login</ButtonComponent>
+          </OptionsComponent>
+        </nav>
         <TextField
           sx={{ backgroundColor: "#D3CDC0" }}
           placeholder="Pesquisar mesa..."
@@ -44,24 +54,19 @@ function Home() {
       <List>
         <h2>Lista de mesas públicas</h2>
         <ul>
-          <li>
-            <Cards />
-          </li>
-          <li>
-            <Cards />
-          </li>
-          <li>
-            <Cards />
-          </li>
-          <li>
-            <Cards />
-          </li>
-          <li>
-            <Cards />
-          </li>
-          <li>
-            <Cards />
-          </li>
+          {table.map((item) => (
+            <li key={item.id}>
+              <Mesas
+                tablename={item.tablename ? item.tablename : "Mesa sem nome"}
+                owner={item.owner ? item.owner : "Sem nome do mestre"}
+                system={item.system ? item.system : "NULL"}
+                image={item.image}
+                participants={
+                  item.participants ? item.participants.length : "NaN"
+                }
+              />
+            </li>
+          ))}
         </ul>
       </List>
     </div>

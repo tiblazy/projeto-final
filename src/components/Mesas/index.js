@@ -3,25 +3,26 @@ import { FaUserAlt } from "react-icons/fa";
 import { Card } from "./style";
 import exemplo1 from "../../images/exemplo1.jpg";
 
-function Cards() {
+function Mesas({ tablename, owner, system, image, participants }) {
+  console.log(tablename);
   return (
-    <Card image={exemplo1}>
+    <Card image={image ? image : exemplo1}>
       <section>
         <div>
-          <p>D&D</p>
+          <p>{system}</p>
           <p>Pública</p>
         </div>
-        <p>Nome da campanha</p>
+        <p>{tablename}</p>
       </section>
       <div>
         <p>
-          <AiFillCrown /> User1
+          <AiFillCrown /> {owner}
         </p>
         <p>
-          <FaUserAlt /> 5
+          <FaUserAlt /> {participants}
         </p>
       </div>
     </Card>
   );
 }
-export default Cards;
+export default Mesas;

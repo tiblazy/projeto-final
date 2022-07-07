@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 export const TablesContext = createContext();
 
 export const TablesProvider = ({ children }) => {
-  const [table, setTable] = useState(null);
+  const [table, setTable] = useState([]);
 
   const navigate = useNavigate();
 
@@ -39,20 +39,14 @@ export const TablesProvider = ({ children }) => {
     });
   };
 
+  function listTables() {
+    baseAPI.get("/tables").then((response) => {
+      response && setTable(response.data);
+    });
+  }
+
   useEffect(() => {
-    const listTables = async () => {
-      try {
-        const response = await baseAPI.get("/tables");
-
-        setTable(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (table) {
-      return table;
-    }
+    listTables();
   }, []);
 
   const tableCreate = async (data, setLoading) => {
