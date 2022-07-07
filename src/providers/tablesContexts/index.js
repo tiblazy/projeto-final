@@ -1,0 +1,111 @@
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+
+import { baseAPI } from "../../apis/api";
+import { getUserToken } from "../../constants/localStorages";
+
+import ROUTES from "../../constants/routes";
+import { toast } from "react-toastify";
+
+export const TablesContext = createContext();
+
+export const TablesProvider = ({ children }) => {
+  const [table, setTable] = useState(null);
+
+  const navigate = useNavigate();
+
+  const toastSuccess = (message, route = null) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      onClose: navigate(route),
+    });
+  };
+
+  const toastError = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  useEffect(() => {
+    const listTables = async () => {
+      try {
+        const response = await baseAPI.get("/tables");
+
+        setTable(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (table) {
+      return table;
+    }
+  }, []);
+
+  const tableCreate = async (data, setLoading) => {
+    try {
+      setLoading(true);
+
+      const response = await baseAPI.post("/tables", data);
+      toastSuccess("Mesa criada com sucesso");
+    } catch (error) {
+      console.log(error);
+      //   toastError(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const tableUpdate = async (id, data, setLoading) => {
+    try {
+      setLoading(true);
+
+      const response = await baseAPI.patch(`/tables/${id}`, data, {
+        headers: { Authorization: `bearer ${getUserToken}` },
+      });
+      toastSuccess("Mesa atualizada com sucesso");
+    } catch (error) {
+      console.log(error);
+      //   toastError(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const tableDelete = async (id, setLoading) => {
+    try {
+      setLoading(true);
+
+      const response = await baseAPI.delete(`/tables/${id}`, {
+        headers: { Authorization: `bearer ${getUserToken}` },
+      });
+      toastSuccess("Mesa removida com sucesso");
+    } catch (error) {
+      console.log(error);
+      //   toastError(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <TablesContext.Provider
+      value={{ tableCreate, tableUpdate, tableDelete, table }}
+    >
+      {children}
+    </TablesContext.Provider>
+  );
+};

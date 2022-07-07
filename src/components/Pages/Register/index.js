@@ -1,74 +1,87 @@
-import * as yup from 'yup';
+import React, { useContext, useState } from "react";
+import { UsersContext } from "../../../providers/usersContexts";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
-import { Background, Container } from './style';
-import { useHistory } from "react-router-dom";
-import { toast } from 'react-toastify'
-import { baseAPI } from "../../../apis/api";
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaRegister } from "../../../validators/yup";
 
-export const Register = ({authenticated}) => {
+import { Background, Container } from "./style";
+import { InputComponent } from "../../Input/style";
+import { ButtonComponent } from "../../Button/style";
 
-    const formSchema = yup.object().shape({
-        name: yup.string().required("Nome obrigatório"),
-        email: yup.string().required("Email obrigatório").email("Email inválido").matches(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i,"Email inválido"),
-        password: yup.string().required("Senha obrigatória").matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/,"Senha obrigatória"),
-        confirmPassword: yup.string().oneOf([yup.ref("password")],"Senha não identica")
-    })
+import ROUTES from "../../../constants/routes";
 
-    const { register,handleSubmit, formState: {errors} } = useForm({
-        resolver: yupResolver(formSchema),
+export const Register = () => {
+  const { userCreate } = useContext(UsersContext);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    }) 
+  const { login } = ROUTES;
 
-    const onRegisterFunction = ({name,email,password,confirmPassword,myTables}) => {
-        const user = {name,email,password,confirmPassword,myTables};
-        baseAPI
-        .post('/register', user )
-        .then((_)=>{
-            toast.success("Sucesso ao criar a conta");
-            return history.push('/login');
-        })
-        .catch((err) => {toast.error("Erro ao criar a conta")})
-    }
+  const schema = schemaRegister();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-    const history = useHistory();
+  const onRegisterFunction = (data) => {
+    const userhash = `${data.name}#${data.name
+      .slice(0, 1)
+      .toUpperCase()}-${data.password.slice(0, 2)}`;
 
-    if(authenticated){
-        return <Redirect to='/dashboard'/>
-    }
+    const user = {
+      avatar: null,
+      username: data.name,
+      email: data.email,
+      password: data.password,
 
-    return (
-        <>
-        <Background>
+      userhash: userhash,
+      myTables: [],
+    };
+
+    userCreate(user, setLoading);
+  };
+
+  return (
+    <>
+      <Background>
         <Container>
-            
-        <h1> Cadastro </h1>
-        <form onSubmit={handleSubmit(onRegisterFunction)}>
-        
-            <span>Nome</span>
-            <input type="text" className="input" {...register("name")}/>
+          <h1> Cadastro </h1>
+          <form onSubmit={handleSubmit(onRegisterFunction)}>
+            <InputComponent
+              label="Nome"
+              placeholder="insira seu usuário"
+              {...register("name")}
+            />
             <p>{errors.name?.message}</p>
-            
-            <span >Email</span>
-                <input type="text" className="input" {...register("email")}/>
-               <p>{errors.email?.message}</p>
-             
-            <span >Senha</span>
-                <input type="password" className="input" {...register("password")}/>
-                <p>{errors.password?.message}</p>
-            
-            <span>Confirmação de senha</span>
-                <input type="password" className="input" {...register("confirmPassword")}/>
-                <p>{errors.confirmPassword?.message}</p>
-
-            <button> Cadastrar </button>
-        <button className='link' onClick={() => history.push('/login')}>Já possui cadastro? clique aqui para fazer login</button>
-        </form>
+            <InputComponent
+              label="Email"
+              placeholder="insira seu email"
+              {...register("email")}
+            />
+            <p>{errors.email?.message}</p>
+            <InputComponent
+              label="password"
+              placeholder="insira seu password"
+              {...register("password")}
+            />
+            <p>{errors.password?.message}</p>
+            <InputComponent
+              label="confirme sua senha"
+              placeholder="confirme sua senha"
+              {...register("confirmPassword")}
+            />
+            <p>{errors.confirmPassword?.message}</p>
+            <ButtonComponent>Cadastrar</ButtonComponent>
+            Já possui cadastro? clique
+            <a onClick={() => navigate(login)}>aqui</a> para fazer login
+          </form>
         </Container>
-        </Background>
-        </>
-    )
-}
+      </Background>
+    </>
+  );
+};

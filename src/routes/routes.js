@@ -1,43 +1,19 @@
-import {Switch, Route} from 'react-router-dom'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Dashboard from '../components/Pages/Dashboard';
-import { Login } from '../components/Pages/Login';
-import { Register } from '../components/Pages/Register';
-import ROUTES from '../constants/routes';
+import { useState, useEffect } from "react";
+import { Routes as Switch, Route } from "react-router-dom";
 
+import Dashboard from "../components/Pages/Dashboard";
+import { Login } from "../components/Pages/Login";
+import { Register } from "../components/Pages/Register";
+import ROUTES from "../constants/routes";
 
-function Routes() {
+export const Routes = () => {
+  const { home, login, register } = ROUTES;
 
-  const [authenticated, setAuthenticated] = useState(false)
-
-    useEffect(()=>{
-        const token = localStorage.getItem('@projetofinal:token');
-        if (token) {
-            setAuthenticated(true)
-        }
-    },[authenticated]);
-
-    return (
-      
-       <>
-          <Switch>
-  
-            <Route exact path={ROUTES.register}> 
-            <Register authenticated={authenticated}/>
-            </Route>
-  
-            <Route exact path={ROUTES.login}> 
-            <Login authenticated={authenticated} setAuthenticated={setAuthenticated}/>
-            </Route>
-
-            <Route exact path={ROUTES.dashboard}> 
-            <Dashboard authenticated={authenticated}/>
-            </Route>
-  
-          </Switch>
-        </>
-    );
-}
-  
-  export default Routes;
+  return (
+    <Switch>
+      {/* <Route path={home} element={<Home authenticated={authenticated} />} /> */}
+      <Route path={login} element={<Login />} />
+      <Route path={register} element={<Register />} />
+    </Switch>
+  );
+};

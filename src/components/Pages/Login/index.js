@@ -1,63 +1,63 @@
-import * as yup from 'yup';
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
-import { Container } from './style';
-import { baseAPI } from "../../../apis/api";
-import { useHistory } from "react-router-dom";
-import { toast } from 'react-toastify'
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { UsersContext } from "../../../providers/usersContexts";
 
-export const Login = ({authenticated, setAuthenticated}) => {
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaLogin } from "../../../validators/yup";
 
-    const history = useHistory();
+import { getUserToken } from "../../../constants/localStorages";
+import ROUTES from "../../../constants/routes";
 
-    const formSchema = yup.object().shape({
-        email: yup.string().required("Email obrigatório").email("Email inválido").matches(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i,"Email inválido"),
-        password: yup.string().required("Senha obrigatória").matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/,"Senha obrigatória"),
-    })
+import { Container } from "./style";
+import { InputComponent } from "../../Input/style";
+import { ButtonComponent } from "../../Button/style";
 
-    const { register,handleSubmit, formState: {errors} } = useForm({
-        resolver: yupResolver(formSchema),
+export const Login = () => {
+  const { login, setEmail, setPassword } = useContext(UsersContext);
+  const navigate = useNavigate();
 
-    }) 
+  const token = getUserToken || "";
 
-    const onLoginFunction = (data) => {
-        baseAPI.post('/login', data )
-        .then((response)=>{
-            console.log(response)
-            const { token } = response.data;
-            localStorage.setItem('@projetofinal:token', JSON.stringify(token));
+  useEffect(() => {}, [token]);
 
-            setAuthenticated(true)
-            return history.push('/dashboard');
-        })
-        .catch((err)=>toast.error('Email ou senha inválidos'))
-    }
-    if(authenticated){
-        return <Redirect to='/dashboard'/>
-    }
-    return (
-        <>
-        <Container>
-            
+  const schema = schemaLogin();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onLoginFunction = (data) => {
+    login(data);
+  };
+
+  return (
+    <>
+      <Container>
         <h1> Login </h1>
-        <form onSubmit={handleSubmit(onLoginFunction)}>            
-
-            <span >Email</span>
-                <input type="text" className="input" {...register("email")}/>
-               <p>{errors.email?.message}</p>
-            
-            <span >Senha</span>
-                <input type="password" className="input" {...register("password")}/>
-                <p>{errors.password?.message}</p>
-
-            <button>Entrar</button>
-        
-        <button className='link' onClick={() => history.push('/register')}>Ainda não possui cadastro? Clique aqui</button>
-       
+        <form onSubmit={handleSubmit(onLoginFunction)}>
+          <InputComponent
+            label="Email"
+            placeholder="insira seu email"
+            {...register("email")}
+          />
+          <p>{errors.email?.message}</p>
+          <InputComponent
+            label="Password"
+            placeholder="insira seu password"
+            {...register("password")}
+          />
+          <p>{errors.password?.message}</p>
+          <ButtonComponent onClick={() => handleSubmit(onLoginFunction)}>
+            Entrar
+          </ButtonComponent>
+          Ainda não possui cadastro ? Clique
+          <a onClick={() => navigate(ROUTES.register)}>aqui</a>
         </form>
-        </Container>
-        </>
-    )
-}
+      </Container>
+    </>
+  );
+};
