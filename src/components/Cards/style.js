@@ -7,7 +7,7 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 10px 15px 5px 15px;
   margin-bottom: 20px;
 
   section {
@@ -36,7 +36,7 @@ export const Card = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     font-size: large;
   }
 `;

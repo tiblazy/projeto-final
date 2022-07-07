@@ -11,5 +11,8 @@ export const ButtonComponent = styled.button`
   border-radius: 5px;
   cursor: pointer;
 
-  background-color: #7e0902;
+  background-color: #932b2a;
+  :hover {
+    background-color: #7e0902;
+  }
 `;
