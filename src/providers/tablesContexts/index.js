@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
 
-import ROUTES from "../../constants/routes";
 import { toast } from "react-toastify";
 
 import { UsersContext } from "../usersContexts";
@@ -51,7 +50,7 @@ export const TablesProvider = ({ children }) => {
 
   useEffect(() => {
     listTables();
-  }, []);
+  }, []); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
 
   useEffect(() => {
     if (logado) {
@@ -67,7 +66,7 @@ export const TablesProvider = ({ children }) => {
       }
       privateListTables();
     }
-  }, [logado]);
+  }, [logado]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
 
   const tableCreate = async (data, setLoading) => {
     try {
