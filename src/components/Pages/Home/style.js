@@ -7,7 +7,7 @@ export const Title = styled.h1`
   margin-bottom: 10px;
 
   @media only screen and (min-width: 600px) {
-    font-size: 36px;
+    font-size: 32px;
   }
 `;
 
@@ -21,6 +21,17 @@ export const Header = styled.header`
   nav {
     display: flex;
     justify-content: space-between;
+
+    section {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
   }
 
   section {

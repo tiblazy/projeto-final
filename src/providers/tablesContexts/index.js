@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 
 import { baseAPI } from "../../apis/api";
@@ -7,10 +7,14 @@ import { getUserToken } from "../../constants/localStorages";
 import ROUTES from "../../constants/routes";
 import { toast } from "react-toastify";
 
+import { UsersContext } from "../usersContexts";
+
 export const TablesContext = createContext();
 
 export const TablesProvider = ({ children }) => {
   const [table, setTable] = useState([]);
+  const [privateTable, setPrivateTable] = useState([]);
+  const { userData, logado } = useContext(UsersContext);
 
   const navigate = useNavigate();
 
@@ -48,6 +52,22 @@ export const TablesProvider = ({ children }) => {
   useEffect(() => {
     listTables();
   }, []);
+
+  useEffect(() => {
+    if (logado) {
+      function privateListTables() {
+        baseAPI
+          .get(`/users/${userData.id}?_embed=tables`, {
+            headers: { Authorization: `Bearer ${getUserToken}` },
+          })
+          .then((response) => {
+            console.log(response.data.tables);
+            response && setPrivateTable(response.data.tables);
+          });
+      }
+      privateListTables();
+    }
+  }, [logado]);
 
   const tableCreate = async (data, setLoading) => {
     try {
@@ -99,7 +119,7 @@ export const TablesProvider = ({ children }) => {
 
   return (
     <TablesContext.Provider
-      value={{ tableCreate, tableUpdate, tableDelete, table }}
+      value={{ tableCreate, tableUpdate, tableDelete, table, privateTable }}
     >
       {children}
     </TablesContext.Provider>
