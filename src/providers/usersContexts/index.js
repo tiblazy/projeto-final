@@ -17,6 +17,8 @@ export const UsersContext = createContext();
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [logado, setLogado] = useState(false);
+  const [userData, setUserData] = useState([]);
 
   const toastSuccess = (message, route) => {
     toast.success(message, {
@@ -47,15 +49,12 @@ export const UsersProvider = ({ children }) => {
     const autoLogin = async () => {
       try {
         // const token = JSON.parse(getUserToken);
-
         // console.log(`bearer ${token}`);
-
         // const response = await baseAPI.get("/users", {
         //   headers: { Authorization: `bearer ${token}` },
         // });
         // console.log(response);
         // setUser(response.data);
-
         // navigate(ROUTES.dashboard);
       } catch (error) {
         console.log(error);
@@ -77,7 +76,10 @@ export const UsersProvider = ({ children }) => {
 
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
 
-        toastSuccess("Login realizado com sucesso!", ROUTES.dashboard);
+        toastSuccess("Login realizado com sucesso!", ROUTES.home);
+
+        setLogado(true);
+        setUserData(res.data.user);
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +109,9 @@ export const UsersProvider = ({ children }) => {
   };
 
   return (
-    <UsersContext.Provider value={{ login, userCreate, user }}>
+    <UsersContext.Provider
+      value={{ login, userCreate, user, logado, userData, setLogado }}
+    >
       {children}
     </UsersContext.Provider>
   );

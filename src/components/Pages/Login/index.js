@@ -14,7 +14,7 @@ import { InputComponent } from "../../Input/style";
 import { ButtonComponent } from "../../Button/style";
 
 export const Login = () => {
-  const { login, setEmail, setPassword } = useContext(UsersContext);
+  const { login } = useContext(UsersContext);
   const navigate = useNavigate();
 
   const token = getUserToken || "";
