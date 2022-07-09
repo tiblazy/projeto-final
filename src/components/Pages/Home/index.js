@@ -4,20 +4,23 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Mesas from "../../Mesas";
 import { Title, Header, TextArea, List } from "./style";
 import { ButtonComponent } from "../../Button/style";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TablesContext } from "../../../providers/tablesContexts";
 import OptionsComponent from "../../Options";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
 import { UsersContext } from "../../../providers/usersContexts";
+import { PasswordModal } from "../../PasswordModal";
 
 function Home() {
   const { table, privateTable } = useContext(TablesContext);
   const navigate = useNavigate();
   const { login, register } = ROUTES;
   const { logado, userData, setLogado } = useContext(UsersContext);
-  console.log(userData);
-  console.log(privateTable);
+  // console.log(userData);
+  // console.log(privateTable);
+
+  const [isHiddenPasswordModal, setIsHiddenPasswordModal] = useState(false);
 
   function handleLogout() {
     setLogado(false);
@@ -123,7 +126,13 @@ function Home() {
         <ul>
           {logado
             ? privateTable.map((item) => (
-                <li key={item.id}>
+                <li
+                  key={item.id}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setIsHiddenPasswordModal(!isHiddenPasswordModal);
+                  }}
+                >
                   <Mesas
                     tablename={
                       item.tablename ? item.tablename : "Mesa sem nome"
@@ -134,6 +143,13 @@ function Home() {
                     participants={
                       item.participants ? item.participants.length : "NaN"
                     }
+                  />
+
+                  <PasswordModal
+                    isVisible={isHiddenPasswordModal}
+                    setIsVisible={setIsHiddenPasswordModal}
+                    tableId={item.id}
+                    tablePassword={item.password}
                   />
                 </li>
               ))

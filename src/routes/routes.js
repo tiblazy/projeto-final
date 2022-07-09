@@ -7,13 +7,14 @@ import ROUTES from "../constants/routes";
 import Home from "../components/Pages/Home";
 
 export const Routes = () => {
-  const { home, login, register } = ROUTES;
+  const { home, login, register, tables } = ROUTES;
 
   return (
     <Switch>
       <Route path={home} element={<Home />} />
       <Route path={login} element={<Login />} />
       <Route path={register} element={<Register />} />
+      {/* <Route path={tables(id)} element={<Table page={id} />} /> */}
     </Switch>
   );
 };
