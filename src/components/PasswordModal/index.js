@@ -33,8 +33,7 @@ export const PasswordModal = ({
     maxHeight: "250px",
   };
 
-  const schema = schemaPassword;
-
+  const schema = schemaPassword();
   const {
     register,
     handleSubmit,
@@ -52,16 +51,13 @@ export const PasswordModal = ({
   const onSubmit = (data) => {
     setIsVisible(false);
 
-    if (tablePassword === null) {
-      navigate(`tables/${tableId}`);
-      if (data.password === tablePassword) {
-        navigate(`/tables/{tableId}`);
-        reset();
-      } else {
-        setError("Senha incorreta");
-        removeError();
-        reset();
-      }
+    if (data.password === tablePassword) {
+      navigate(`/tables/{tableId}`);
+      reset();
+    } else {
+      setError("Senha incorreta");
+      removeError();
+      reset();
     }
   };
 
@@ -78,9 +74,9 @@ export const PasswordModal = ({
             {...register("password")}
           />
           {isHidden ? (
-            <AiFillEye onClick={() => setIsHidden(!isHidden)} />
-          ) : (
             <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
+          ) : (
+            <AiFillEye onClick={() => setIsHidden(!isHidden)} />
           )}
           {error ? (
             <p>{error}</p>

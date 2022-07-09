@@ -126,11 +126,15 @@ function Home() {
         <ul>
           {logado
             ? privateTable.map((item) => (
+              // onClick para ver se é publica ou não, precisa ser colocada nas demais condicionais de renderização
                 <li
                   key={item.id}
-                  style={{ cursor: "pointer" }}
                   onClick={() => {
-                    setIsHiddenPasswordModal(!isHiddenPasswordModal);
+                    if (item.visibility === "public") {
+                      navigate(`tables/${item.id}`);
+                    } else {
+                      setIsHiddenPasswordModal(true);
+                    }
                   }}
                 >
                   <Mesas
