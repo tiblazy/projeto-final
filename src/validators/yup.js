@@ -25,3 +25,12 @@ export const schemaRegister = () => {
 
   return schema;
 };
+
+export const schemaCharacter = () => {
+  const schema = yup.object().shape({
+    name: yup.string().required("Nome obrigatório"),
+    class: yup.string().required("Classe obrigatória"),
+    lore: yup.string().required("Lore obrigatória"),
+    photo: yup.string().optional(),
+  });
+};
