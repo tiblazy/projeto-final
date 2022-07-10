@@ -1,33 +1,32 @@
-import { ButtonComponent } from "../Button/style";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
 import { useState } from "react";
+import { Div } from "./style";
 
 const OptionsComponent = ({ children }) => {
   const [modal, setModal] = useState(false);
 
   return (
-    <div>
-      <ButtonComponent
+    <Div>
+      <MoreHorizIcon
         onClick={() => {
           setModal(!modal);
         }}
-      >
-        Teste
-      </ButtonComponent>
+      ></MoreHorizIcon>
       <Rodal
         showCloseButton={false}
         animation="slideRight"
         customStyles={{
-          width: "150px",
-          height: "100vh",
+          width: "100vw",
+          height: "10vh",
           margin: "0 0 0 auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "20px",
-          padding: "50px 10px",
+          padding: "30px 10px",
           fontSize: "1.2rem",
+          gap: "10px",
         }}
         visible={modal}
         onClose={() => {
@@ -36,7 +35,7 @@ const OptionsComponent = ({ children }) => {
       >
         {children}
       </Rodal>
-    </div>
+    </Div>
   );
 };
 
