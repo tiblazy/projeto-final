@@ -1,8 +1,6 @@
 import Rodal from "rodal";
-import { useContext, useEffect, useState } from "react";
 import { Container } from "./style";
 import { InputComponent } from "../Input/style";
-import { TablesContext } from "../../providers/tablesContexts";
 import "rodal/lib/rodal.css";
 import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
@@ -32,6 +30,8 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
 
   function onSubmit(formData) {
     console.log(formData);
+
+    reset();
   }
 
   return (
@@ -40,7 +40,20 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
       onClose={hide}
       customStyles={customStyles}
     >
-      <Container></Container>
+      <Container>
+        <h1>Adicione um participante</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="name">Nome do participante</label>
+          <InputComponent type="name" name="name" {...register("name")} />
+          <span>{errors.name?.message}</span>
+          <label htmlFor="email">Email</label>
+          <InputComponent type="email" name="email" {...register("email")} />
+          <span>{errors.email?.message}</span>
+          <ButtonComponent type="submit">Adicionar</ButtonComponent>
+        </form>
+      </Container>
     </Rodal>
   );
 }
+
+export default ParticipantModal;
