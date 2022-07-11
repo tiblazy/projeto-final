@@ -4,25 +4,32 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Mesas from "../../Mesas";
 import { Title, Header, TextArea, List } from "./style";
 import { ButtonComponent } from "../../Button/style";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TablesContext } from "../../../providers/tablesContexts";
 import OptionsComponent from "../../Options";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
 import { UsersContext } from "../../../providers/usersContexts";
+import { PasswordModal } from "../../PasswordModal";
+import TableModal from "../../TableModal";
 
 function Home() {
   const { table, privateTable } = useContext(TablesContext);
   const navigate = useNavigate();
   const { login, register } = ROUTES;
   const { logado, userData, setLogado } = useContext(UsersContext);
-  console.log(userData);
-  console.log(privateTable);
+
+  const tablePub = table.filter((item) => item.visibility === "public");
+
+  const [isHiddenCreateTableModal, setIsHiddenCreateTableModal] =
+    useState(false);
+  const [isHiddenPasswordModal, setIsHiddenPasswordModal] = useState(false);
 
   function handleLogout() {
     setLogado(false);
     localStorage.removeItem("@HELLFIRE/userAccess");
   }
+
   return (
     <div>
       <Header>
@@ -45,7 +52,13 @@ function Home() {
           <OptionsComponent>
             {logado ? (
               <div>
-                <ButtonComponent>Criar mesa</ButtonComponent>
+                <ButtonComponent
+                  onClick={() =>
+                    setIsHiddenCreateTableModal(!isHiddenCreateTableModal)
+                  }
+                >
+                  Criar mesa
+                </ButtonComponent>
                 <ButtonComponent onClick={() => handleLogout()}>
                   Logout
                 </ButtonComponent>
@@ -75,7 +88,13 @@ function Home() {
         />
         {logado ? (
           <section>
-            <ButtonComponent heigth={"52px"} width={"186px"}>
+            <ButtonComponent
+              heigth={"52px"}
+              width={"186px"}
+              onClick={() =>
+                setIsHiddenCreateTableModal(!isHiddenCreateTableModal)
+              }
+            >
               Criar mesa
             </ButtonComponent>
             <ButtonComponent
@@ -105,6 +124,7 @@ function Home() {
           </section>
         )}
       </Header>
+
       {!logado && (
         <TextArea>
           <p>
@@ -122,29 +142,55 @@ function Home() {
         {logado ? <h2>Suas mesas</h2> : <h2>Lista de mesas públicas</h2>}
         <ul>
           {logado
-            ? privateTable.map((item) => (
-                <li key={item.id}>
-                  <Mesas
-                    tablename={
-                      item.tablename ? item.tablename : "Mesa sem nome"
-                    }
-                    owner={item.owner ? item.owner : "Sem nome do mestre"}
-                    system={item.system ? item.system : "NULL"}
-                    image={item.image}
-                    participants={
-                      item.participants ? item.participants.length : "NaN"
-                    }
+            ? privateTable?.map((item) => (
+                <>
+                  <li
+                    key={item.id}
+                    onClick={() => {
+                      // console.log(item.id);
+                      if (item.visibility === "public") {
+                        navigate(`tables/${item.id}`);
+                      } else {
+                        // console.log(item.password);
+                        setIsHiddenPasswordModal(true);
+                      }
+                    }}
+                  >
+                    <Mesas
+                      tablename={
+                        item.tablename ? item.tablename : "Mesa sem nome"
+                      }
+                      owner={item.owner ? item.owner : "Sem nome do mestre"}
+                      system={item.system ? item.system : "NULL"}
+                      visibility={item.visibility}
+                      image={item.image}
+                      participants={
+                        item.participants ? item.participants.length : "NaN"
+                      }
+                    />
+                  </li>
+                  <PasswordModal
+                    isVisible={isHiddenPasswordModal}
+                    setIsVisible={setIsHiddenPasswordModal}
+                    tablePassword={item.password}
+                    tableId={item.id}
                   />
-                </li>
+                </>
               ))
-            : table.map((item) => (
-                <li key={item.id}>
+            : tablePub.map((item) => (
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    navigate(login);
+                  }}
+                >
                   <Mesas
                     tablename={
                       item.tablename ? item.tablename : "Mesa sem nome"
                     }
                     owner={item.owner ? item.owner : "Sem nome do mestre"}
                     system={item.system ? item.system : "NULL"}
+                    visibility={item.visibility}
                     image={item.image}
                     participants={
                       item.participants ? item.participants.length : "NaN"
@@ -154,6 +200,11 @@ function Home() {
               ))}
         </ul>
       </List>
+
+      <TableModal
+        visible={isHiddenCreateTableModal}
+        setVisible={setIsHiddenCreateTableModal}
+      />
     </div>
   );
 }
