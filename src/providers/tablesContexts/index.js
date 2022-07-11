@@ -66,7 +66,7 @@ export const TablesProvider = ({ children }) => {
     } else if (!logado) {
       listTables();
     }
-  }, [table, logado]);
+  }, [logado]);
 
   const tableCreate = async (data, setLoading) => {
     try {

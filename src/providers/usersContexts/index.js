@@ -48,7 +48,7 @@ export const UsersProvider = ({ children }) => {
     baseAPI
       .post("/login", data)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
 
@@ -58,7 +58,7 @@ export const UsersProvider = ({ children }) => {
         setUserData(res.data.user);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
 
         toastError("Login falhou, verifique seu email ou senha!");
       });
