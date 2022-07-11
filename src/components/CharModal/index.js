@@ -35,7 +35,12 @@ function CharModal({ charVisible, setCharVisible }) {
     console.log(formData);
 
     setCharacterData(formData);
+
     createCharacter();
+
+    reset();
+
+    hide();
   }
 
   return (
@@ -57,3 +62,5 @@ function CharModal({ charVisible, setCharVisible }) {
     </Rodal>
   );
 }
+
+export default CharModal;
