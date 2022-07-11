@@ -74,6 +74,12 @@ function TableModal({ tableVisible, setTableVisible }) {
     } else {
       formData.visibility = "public";
     }
+    formData.image = null;
+    formData.lore = null;
+    formData.notice_board = null;
+    formData.maxParticipants = 5;
+    formData.participants = [];
+    formData.characters = [];
 
     tableCreate(formData, setLoading);
   }
