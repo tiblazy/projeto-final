@@ -49,24 +49,24 @@ export const TablesProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    listTables();
-  }, [table]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
-
-  useEffect(() => {
     if (logado) {
-      function privateListTables() {
-        baseAPI
+      async function privateListTables() {
+        await baseAPI
           .get(`/users/${userData.id}?_embed=tables`, {
-            headers: { Authorization: `Bearer ${getUserToken}` },
+            headers: {
+              Authorization: `Bearer ${getUserToken}`,
+            },
           })
           .then((response) => {
             response && setPrivateTable(response.data.tables);
           });
       }
-
+      listTables();
       privateListTables();
+    } else if (!logado) {
+      listTables();
     }
-  }, [table, logado]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
+  }, [table, logado]);
 
   const tableCreate = async (data, setLoading) => {
     try {

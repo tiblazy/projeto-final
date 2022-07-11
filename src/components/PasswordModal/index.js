@@ -25,12 +25,16 @@ export const PasswordModal = ({
 
   const navigate = useNavigate();
 
-  const hide = () => setIsVisible(false);
+  const hide = () => {
+    setIsVisible(false);
+    reset();
+  };
+
   const customStyles = {
-    width: "75%",
-    maxWidth: "450px",
-    height: "75%",
-    maxHeight: "250px",
+    width: "100%",
+    maxWidth: "320px",
+
+    color: "#7E0902",
   };
 
   const schema = schemaPassword();
@@ -49,15 +53,13 @@ export const PasswordModal = ({
     }, 3000);
 
   const onSubmit = (data) => {
-    setIsVisible(false);
-
     if (data.password === tablePassword) {
-      navigate(`/tables/{tableId}`);
+      navigate(`/tables/${tableId}`);
+      setIsVisible(false);
       reset();
     } else {
       setError("Senha incorreta");
       removeError();
-      reset();
     }
   };
 
@@ -65,19 +67,24 @@ export const PasswordModal = ({
     <Rodal visible={isVisible} onClose={hide} customStyles={customStyles}>
       <Container>
         <h1>Entrar nessa mesa</h1>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>Senha</label>
+
           <InputComponent
             placeholder="insira a senha da sala"
-            type={isHidden ? "password" : "text"}
+            type={isHidden ? "text" : "password"}
             name="password"
             {...register("password")}
+            InputProps={{
+              endAdornment: isHidden ? (
+                <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
+              ) : (
+                <AiFillEye onClick={() => setIsHidden(!isHidden)} />
+              ),
+            }}
           />
-          {isHidden ? (
-            <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
-          ) : (
-            <AiFillEye onClick={() => setIsHidden(!isHidden)} />
-          )}
+
           {error ? (
             <p>{error}</p>
           ) : errors.password ? (
