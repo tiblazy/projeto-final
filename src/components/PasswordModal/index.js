@@ -25,8 +25,6 @@ export const PasswordModal = ({
 
   const navigate = useNavigate();
 
-  // console.log(tableId)
-
   const hide = () => {
     setIsVisible(false);
     reset();

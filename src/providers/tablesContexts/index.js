@@ -68,26 +68,24 @@ export const TablesProvider = ({ children }) => {
     }
   }, [logado]);
 
-  const tableCreate = async (data, setLoading) => {
-    try {
-      setLoading(true);
+  // const tableCreate = async (data, setLoading) => {
+  //   try {
+  //     setLoading(true);
 
-      console.log(data);
+  //     const response = await baseAPI.post("/tables", data, {
+  //       headers: {
+  //         Authorization: `Bearer ${getUserToken}`,
+  //       },
+  //     });
+  //     console.log(response);
 
-      const response = await baseAPI.post("/tables", data, {
-        headers: {
-          Authorization: `bearer ${getUserToken}`,
-        },
-      });
-      
-      toastSuccess("Mesa criada com sucesso");
-    } catch (error) {
-      console.log(error);
-      toastError("Houve algum problema na sua criação");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.status == 201) {
+  //       toastSuccess("Mesa criada com sucesso");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const tableUpdate = async (id, data, setLoading) => {
     try {
@@ -123,7 +121,7 @@ export const TablesProvider = ({ children }) => {
 
   return (
     <TablesContext.Provider
-      value={{ tableCreate, tableUpdate, tableDelete, table, privateTable }}
+      value={{ tableUpdate, tableDelete, table, privateTable }}
     >
       {children}
     </TablesContext.Provider>

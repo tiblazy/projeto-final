@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { baseAPI } from "../../apis/api";
@@ -6,6 +6,7 @@ import {
   userToken,
   getUserToken,
   setUserToken,
+  userListTables,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -48,18 +49,15 @@ export const UsersProvider = ({ children }) => {
     baseAPI
       .post("/login", data)
       .then((res) => {
-        // console.log(res.data);
-
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
-
+        localStorage.setItem(userListTables, JSON.stringify(res.data.user.myTables));
         toastSuccess("Login realizado com sucesso!", ROUTES.home);
 
         setLogado(true);
+        setUser(res.data.user);
         setUserData(res.data.user);
       })
       .catch((err) => {
-        // console.log(err);
-
         toastError("Login falhou, verifique seu email ou senha!");
       });
   }
