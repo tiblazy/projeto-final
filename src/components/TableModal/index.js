@@ -9,6 +9,8 @@ import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCreateTable } from "../../validators/yup";
+import { IoLogoGameControllerA } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
 
 function TableModal({ tableVisible, setTableVisible }) {
   const [privateTable, setPrivateTable] = useState(false);
@@ -76,10 +78,24 @@ function TableModal({ tableVisible, setTableVisible }) {
         <h1>Criar mesa</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nome da mesa</label>
-          <InputComponent type="name" name="name" {...register("name")} />
+          <InputComponent
+            type="name"
+            name="name"
+            {...register("name")}
+            InputProps={{
+              startAdornment: <FaUserCircle />,
+            }}
+          />
           <span>{errors.name?.message}</span>
           <label htmlFor="system">Sistema de jogo</label>
-          <InputComponent type="text" name="system" {...register("system")} />
+          <InputComponent
+            type="text"
+            name="system"
+            {...register("system")}
+            InputProps={{
+              startAdornment: <IoLogoGameControllerA />,
+            }}
+          />
           <span>{errors.system?.message}</span>
           <InputComponent
             type="checkbox"
