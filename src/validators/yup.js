@@ -33,4 +33,6 @@ export const schemaCharacter = () => {
     lore: yup.string().required("Lore obrigatória"),
     photo: yup.string().optional(),
   });
+
+  return schema;
 };
