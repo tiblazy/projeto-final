@@ -69,6 +69,12 @@ function TableModal({ tableVisible, setTableVisible }) {
 
     console.log(formData);
 
+    if (formData.visibility === true) {
+      formData.visibility = "private";
+    } else {
+      formData.visibility = "public";
+    }
+
     tableCreate(formData, setLoading);
   }
 
