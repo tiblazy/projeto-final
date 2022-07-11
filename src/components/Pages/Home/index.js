@@ -146,35 +146,33 @@ function Home() {
         <ul>
           {logado
             ? privateTable?.map((item) => (
-                <>
-                  <li
-                    key={item.id}
-                    onClick={() => {
-                      console.log(item.id);
-                      if (item.visibility === "public") {
-                        navigate(`tables/${item.id}`);
-                      } else {
-                        console.log(item.password);
-                        setIsHiddenPasswordModal(true);
-                        setTableId(item.id);
-                        setTablePassword(item.password);
-                      }
-                    }}
-                  >
-                    <Mesas
-                      tablename={
-                        item.tablename ? item.tablename : "Mesa sem nome"
-                      }
-                      owner={item.userId ? item.userId : "Sem nome do mestre"}
-                      system={item.system ? item.system : "NULL"}
-                      visibility={item.visibility}
-                      image={item.image}
-                      participants={
-                        item.participants ? item.participants.length : "NaN"
-                      }
-                    />
-                  </li>
-                </>
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    console.log(item.id);
+                    if (item.visibility === "public") {
+                      navigate(`tables/${item.id}`);
+                    } else {
+                      console.log(item.password);
+                      setIsHiddenPasswordModal(true);
+                      setTableId(item.id);
+                      setTablePassword(item.password);
+                    }
+                  }}
+                >
+                  <Mesas
+                    tablename={
+                      item.tablename ? item.tablename : "Mesa sem nome"
+                    }
+                    owner={item.userId ? item.userId : "Sem nome do mestre"}
+                    system={item.system ? item.system : "NULL"}
+                    visibility={item.visibility}
+                    image={item.image}
+                    participants={
+                      item.participants ? item.participants.length : "NaN"
+                    }
+                  />
+                </li>
               ))
             : tablePub.map((item) => (
                 <li
@@ -208,8 +206,8 @@ function Home() {
       />
 
       <TableModal
-        visible={isHiddenCreateTableModal}
-        setVisible={setIsHiddenCreateTableModal}
+        tableVisible={isHiddenCreateTableModal}
+        setTableVisible={setIsHiddenCreateTableModal}
       />
     </div>
   );

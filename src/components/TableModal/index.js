@@ -67,21 +67,28 @@ function TableModal({ tableVisible, setTableVisible }) {
 
     hide();
 
-    console.log(formData);
-
     if (formData.visibility === true) {
       formData.visibility = "private";
     } else {
       formData.visibility = "public";
+      formData.password = null;
     }
-    formData.image = null;
-    formData.lore = null;
-    formData.notice_board = null;
-    formData.maxParticipants = 5;
-    formData.participants = [];
-    formData.characters = [];
 
-    tableCreate(formData, setLoading);
+    //trocar userId por valor dinamico
+    const newTable = {
+      tablename: formData.name,
+      password: formData.password,
+      userId: 6,
+      system: formData.system,
+      image: null,
+      lore: null,
+      notice_board: null,
+      maxParticipants: 5,
+      participants: [],
+      characters: [],
+    };
+
+    tableCreate(newTable, setLoading);
   }
 
   return (
@@ -112,7 +119,7 @@ function TableModal({ tableVisible, setTableVisible }) {
           <InputComponent
             type="checkbox"
             name="private"
-            onChange={() => {
+            onClick={() => {
               setPrivateTable(!privateTable);
             }}
             {...register("visibility")}
@@ -134,6 +141,7 @@ function TableModal({ tableVisible, setTableVisible }) {
               ),
             }}
           />
+          {console.log(privateTable)}
           <span>{errors.password?.message}</span>
           <label htmlFor="confirmPass">Confirme sua senha</label>
           <InputComponent
