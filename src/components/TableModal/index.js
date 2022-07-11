@@ -9,9 +9,10 @@ import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCreateTable } from "../../validators/yup";
+import { IoLogoGameControllerA } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
 
-function TableModal({ visible, setVisible }) {
-  //   const [visible, setVisible] = useState(false); // deve ser declarado no <Dashboard/> e passado por props
+function TableModal({ tableVisible, setTableVisible }) {
   const [privateTable, setPrivateTable] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
   const [confirmShown, setConfirmShown] = useState(false);
@@ -21,13 +22,11 @@ function TableModal({ visible, setVisible }) {
 
   const { tableCreate } = useContext(TablesContext);
 
-  // deve ser declarada no <Dashboard/> e ser chamada no botão que abrir o modal
-  //   function show() {
-  //     setVisible(true);
-  //   }
+  // deve ser chamada no botão que abrir o modal
+  //     setTableVisible(true);
 
   function hide() {
-    setVisible(false);
+    setTableVisible(false);
   }
 
   useEffect(() => {
@@ -68,26 +67,62 @@ function TableModal({ visible, setVisible }) {
 
     hide();
 
-    console.log(formData);
+    if (formData.visibility === true) {
+      formData.visibility = "private";
+    } else {
+      formData.visibility = "public";
+      formData.password = null;
+    }
 
-    tableCreate(formData, setLoading);
+    //trocar userId por valor dinamico
+    const newTable = {
+      tablename: formData.name,
+      password: formData.password,
+      userId: 6,
+      system: formData.system,
+      image: null,
+      lore: null,
+      notice_board: null,
+      maxParticipants: 5,
+      participants: [],
+      characters: [],
+    };
+
+    tableCreate(newTable, setLoading);
   }
 
   return (
-    <Rodal visible={visible} onClose={hide} customStyles={customStyles}>
+    <Rodal visible={tableVisible} onClose={hide} customStyles={customStyles}>
       <Container>
         <h1>Criar mesa</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nome da mesa</label>
-          <InputComponent type="name" name="name" {...register("name")} />
+          <InputComponent
+            type="name"
+            name="name"
+            {...register("name")}
+            InputProps={{
+              startAdornment: <FaUserCircle />,
+            }}
+          />
+          <span>{errors.name?.message}</span>
           <label htmlFor="system">Sistema de jogo</label>
-          <InputComponent type="text" name="system" {...register("system")} />
+          <InputComponent
+            type="text"
+            name="system"
+            {...register("system")}
+            InputProps={{
+              startAdornment: <IoLogoGameControllerA />,
+            }}
+          />
+          <span>{errors.system?.message}</span>
           <InputComponent
             type="checkbox"
             name="private"
-            onChange={() => {
+            onClick={() => {
               setPrivateTable(!privateTable);
             }}
+            {...register("visibility")}
           />
           <label htmlFor="private">Mesa privada?</label>
           <label htmlFor="password">Senha</label>
@@ -98,12 +133,16 @@ function TableModal({ visible, setVisible }) {
             {...register("password")}
             onChange={(event) => setPasswordInput(event.target.value)}
             value={passwordInput}
+            InputProps={{
+              endAdornment: !passwordShown ? (
+                <AiFillEye onClick={togglePassword} />
+              ) : (
+                <AiFillEyeInvisible onClick={togglePassword} />
+              ),
+            }}
           />
-          {!passwordShown ? (
-            <AiFillEye onClick={togglePassword} />
-          ) : (
-            <AiFillEyeInvisible onClick={togglePassword} />
-          )}
+          {console.log(privateTable)}
+          <span>{errors.password?.message}</span>
           <label htmlFor="confirmPass">Confirme sua senha</label>
           <InputComponent
             type={confirmShown ? "text" : "password"}
@@ -112,12 +151,15 @@ function TableModal({ visible, setVisible }) {
             {...register("confirmPass")}
             onChange={(event) => setConfirmpassInput(event.target.value)}
             value={confirmPassInput}
+            InputProps={{
+              endAdornment: !confirmShown ? (
+                <AiFillEye onClick={toggleConfirmPass} />
+              ) : (
+                <AiFillEyeInvisible onClick={toggleConfirmPass} />
+              ),
+            }}
           />
-          {!confirmShown ? (
-            <AiFillEye onClick={toggleConfirmPass} />
-          ) : (
-            <AiFillEyeInvisible onClick={toggleConfirmPass} />
-          )}
+          <span>{errors.confirmPass?.message}</span>
           <ButtonComponent type="submit">Criar</ButtonComponent>
         </form>
       </Container>

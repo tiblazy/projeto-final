@@ -14,10 +14,13 @@ import { PasswordModal } from "../../PasswordModal";
 import TableModal from "../../TableModal";
 
 function Home() {
+  const { logado, userData, setLogado } = useContext(UsersContext);
   const { table, privateTable } = useContext(TablesContext);
   const navigate = useNavigate();
   const { login, register } = ROUTES;
-  const { logado, userData, setLogado } = useContext(UsersContext);
+
+  const [tableId, setTableId] = useState(null);
+  const [tablePassword, setTablePassword] = useState(null);
 
   const tablePub = table.filter((item) => item.visibility === "public");
 
@@ -143,39 +146,33 @@ function Home() {
         <ul>
           {logado
             ? privateTable?.map((item) => (
-                <>
-                  <li
-                    key={item.id}
-                    onClick={() => {
-                      // console.log(item.id);
-                      if (item.visibility === "public") {
-                        navigate(`tables/${item.id}`);
-                      } else {
-                        // console.log(item.password);
-                        setIsHiddenPasswordModal(true);
-                      }
-                    }}
-                  >
-                    <Mesas
-                      tablename={
-                        item.tablename ? item.tablename : "Mesa sem nome"
-                      }
-                      owner={item.owner ? item.owner : "Sem nome do mestre"}
-                      system={item.system ? item.system : "NULL"}
-                      visibility={item.visibility}
-                      image={item.image}
-                      participants={
-                        item.participants ? item.participants.length : "NaN"
-                      }
-                    />
-                  </li>
-                  <PasswordModal
-                    isVisible={isHiddenPasswordModal}
-                    setIsVisible={setIsHiddenPasswordModal}
-                    tablePassword={item.password}
-                    tableId={item.id}
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    console.log(item.id);
+                    if (item.visibility === "public") {
+                      navigate(`tables/${item.id}`);
+                    } else {
+                      console.log(item.password);
+                      setIsHiddenPasswordModal(true);
+                      setTableId(item.id);
+                      setTablePassword(item.password);
+                    }
+                  }}
+                >
+                  <Mesas
+                    tablename={
+                      item.tablename ? item.tablename : "Mesa sem nome"
+                    }
+                    owner={item.userId ? item.userId : "Sem nome do mestre"}
+                    system={item.system ? item.system : "NULL"}
+                    visibility={item.visibility}
+                    image={item.image}
+                    participants={
+                      item.participants ? item.participants.length : "NaN"
+                    }
                   />
-                </>
+                </li>
               ))
             : tablePub.map((item) => (
                 <li
@@ -188,7 +185,7 @@ function Home() {
                     tablename={
                       item.tablename ? item.tablename : "Mesa sem nome"
                     }
-                    owner={item.owner ? item.owner : "Sem nome do mestre"}
+                    owner={item.userId ? item.userId : "Sem nome do mestre"}
                     system={item.system ? item.system : "NULL"}
                     visibility={item.visibility}
                     image={item.image}
@@ -201,9 +198,16 @@ function Home() {
         </ul>
       </List>
 
+      <PasswordModal
+        isVisible={isHiddenPasswordModal}
+        setIsVisible={setIsHiddenPasswordModal}
+        tableId={tableId}
+        tablePassword={tablePassword}
+      />
+
       <TableModal
-        visible={isHiddenCreateTableModal}
-        setVisible={setIsHiddenCreateTableModal}
+        tableVisible={isHiddenCreateTableModal}
+        setTableVisible={setIsHiddenCreateTableModal}
       />
     </div>
   );

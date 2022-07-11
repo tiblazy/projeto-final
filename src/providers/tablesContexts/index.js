@@ -66,19 +66,24 @@ export const TablesProvider = ({ children }) => {
     } else if (!logado) {
       listTables();
     }
-  }, [table, logado]);
+  }, [logado]);
 
   const tableCreate = async (data, setLoading) => {
     try {
       setLoading(true);
 
+      console.log(data);
+
       const response = await baseAPI.post("/tables", data, {
-        headers: { Authorization: `bearer ${getUserToken}` },
+        headers: {
+          Authorization: `bearer ${getUserToken}`,
+        },
       });
+      
       toastSuccess("Mesa criada com sucesso");
     } catch (error) {
       console.log(error);
-      //   toastError(error)
+      toastError("Houve algum problema na sua criação");
     } finally {
       setLoading(false);
     }
