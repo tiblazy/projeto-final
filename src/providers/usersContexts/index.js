@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { baseAPI } from "../../apis/api";
@@ -6,7 +6,6 @@ import {
   userToken,
   getUserToken,
   setUserToken,
-  removeUserToken,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -45,29 +44,6 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    const autoLogin = async () => {
-      try {
-        // const token = JSON.parse(getUserToken);
-        // console.log(`bearer ${token}`);
-        // const response = await baseAPI.get("/users", {
-        //   headers: { Authorization: `bearer ${token}` },
-        // });
-        // console.log(response);
-        // setUser(response.data);
-        // navigate(ROUTES.dashboard);
-      } catch (error) {
-        console.log(error);
-        // removeUserToken(userToken);
-      }
-    };
-
-    if (getUserToken) {
-      autoLogin();
-      // navigate(ROUTES.dashboard);
-    }
-  }, []);
-
   function login(data, setLoading) {
     baseAPI
       .post("/login", data)
@@ -98,7 +74,7 @@ export const UsersProvider = ({ children }) => {
       if (getUserToken) {
         toastSuccess(
           "Usuário criado com sucesso, redirecionando....",
-          ROUTES.dashboard
+          ROUTES.login
         );
       }
     } catch (error) {

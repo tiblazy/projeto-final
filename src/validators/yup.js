@@ -25,3 +25,13 @@ export const schemaRegister = () => {
 
   return schema;
 };
+
+// Modal Table
+
+export const schemaPassword = () => {
+  const schema = yup.object().shape({
+    password: yup.string().required("Senha obrigatória"),
+  });
+
+  return schema;
+};

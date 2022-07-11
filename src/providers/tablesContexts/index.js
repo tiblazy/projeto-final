@@ -50,7 +50,7 @@ export const TablesProvider = ({ children }) => {
 
   useEffect(() => {
     listTables();
-  }, []); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
+  }, [table]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
 
   useEffect(() => {
     if (logado) {
@@ -60,13 +60,13 @@ export const TablesProvider = ({ children }) => {
             headers: { Authorization: `Bearer ${getUserToken}` },
           })
           .then((response) => {
-            console.log(response.data.tables);
             response && setPrivateTable(response.data.tables);
           });
       }
+
       privateListTables();
     }
-  }, [logado]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
+  }, [table, logado]); //precisa atualizar sempre que for criado uma tabela //inicialmente usando table nas dependencias
 
   const tableCreate = async (data, setLoading) => {
     try {
