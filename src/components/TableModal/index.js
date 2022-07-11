@@ -11,6 +11,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCreateTable } from "../../validators/yup";
 import { IoLogoGameControllerA } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
+import { baseAPI } from "../../apis/api";
+import { getUserToken } from "../../constants/localStorages";
+
+import { toast } from "react-toastify";
 
 function TableModal({ tableVisible, setTableVisible }) {
   const [privateTable, setPrivateTable] = useState(false);
@@ -24,6 +28,18 @@ function TableModal({ tableVisible, setTableVisible }) {
 
   // deve ser chamada no botão que abrir o modal
   //     setTableVisible(true);
+
+  const toastSuccess = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   function hide() {
     setTableVisible(false);
@@ -62,7 +78,7 @@ function TableModal({ tableVisible, setTableVisible }) {
     resolver: yupResolver(formSchema),
   });
 
-  function onSubmit(formData) {
+  async function onSubmit(formData) {
     reset();
 
     hide();
@@ -88,7 +104,15 @@ function TableModal({ tableVisible, setTableVisible }) {
       characters: [],
     };
 
-    tableCreate(newTable, setLoading);
+    const response = await baseAPI.post("/tables", newTable, {
+      headers: {
+        Authorization: `Bearer ${getUserToken}`,
+      },
+    });
+
+    if (response.status == 201) {
+      toastSuccess("Mesa criada com sucesso");
+    }
   }
 
   return (
@@ -141,7 +165,6 @@ function TableModal({ tableVisible, setTableVisible }) {
               ),
             }}
           />
-          {console.log(privateTable)}
           <span>{errors.password?.message}</span>
           <label htmlFor="confirmPass">Confirme sua senha</label>
           <InputComponent
