@@ -10,8 +10,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCreateTable } from "../../validators/yup";
 
-function TableModal({ visible, setVisible }) {
-  //   const [visible, setVisible] = useState(false); // deve ser declarado no <Dashboard/> e passado por props
+function TableModal({ tableVisible, setTableVisible }) {
   const [privateTable, setPrivateTable] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
   const [confirmShown, setConfirmShown] = useState(false);
@@ -21,13 +20,11 @@ function TableModal({ visible, setVisible }) {
 
   const { tableCreate } = useContext(TablesContext);
 
-  // deve ser declarada no <Dashboard/> e ser chamada no botão que abrir o modal
-  //   function show() {
-  //     setVisible(true);
-  //   }
+  // deve ser chamada no botão que abrir o modal
+  //     setTableVisible(true);
 
   function hide() {
-    setVisible(false);
+    setTableVisible(false);
   }
 
   useEffect(() => {
@@ -74,20 +71,23 @@ function TableModal({ visible, setVisible }) {
   }
 
   return (
-    <Rodal visible={visible} onClose={hide} customStyles={customStyles}>
+    <Rodal visible={tableVisible} onClose={hide} customStyles={customStyles}>
       <Container>
         <h1>Criar mesa</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nome da mesa</label>
           <InputComponent type="name" name="name" {...register("name")} />
+          <span>{errors.name?.message}</span>
           <label htmlFor="system">Sistema de jogo</label>
           <InputComponent type="text" name="system" {...register("system")} />
+          <span>{errors.system?.message}</span>
           <InputComponent
             type="checkbox"
             name="private"
             onChange={() => {
               setPrivateTable(!privateTable);
             }}
+            {...register("visibility")}
           />
           <label htmlFor="private">Mesa privada?</label>
           <label htmlFor="password">Senha</label>
@@ -98,12 +98,15 @@ function TableModal({ visible, setVisible }) {
             {...register("password")}
             onChange={(event) => setPasswordInput(event.target.value)}
             value={passwordInput}
+            InputProps={{
+              endAdornment: !passwordShown ? (
+                <AiFillEye onClick={togglePassword} />
+              ) : (
+                <AiFillEyeInvisible onClick={togglePassword} />
+              ),
+            }}
           />
-          {!passwordShown ? (
-            <AiFillEye onClick={togglePassword} />
-          ) : (
-            <AiFillEyeInvisible onClick={togglePassword} />
-          )}
+          <span>{errors.password?.message}</span>
           <label htmlFor="confirmPass">Confirme sua senha</label>
           <InputComponent
             type={confirmShown ? "text" : "password"}
@@ -112,12 +115,15 @@ function TableModal({ visible, setVisible }) {
             {...register("confirmPass")}
             onChange={(event) => setConfirmpassInput(event.target.value)}
             value={confirmPassInput}
+            InputProps={{
+              endAdornment: !confirmShown ? (
+                <AiFillEye onClick={toggleConfirmPass} />
+              ) : (
+                <AiFillEyeInvisible onClick={toggleConfirmPass} />
+              ),
+            }}
           />
-          {!confirmShown ? (
-            <AiFillEye onClick={toggleConfirmPass} />
-          ) : (
-            <AiFillEyeInvisible onClick={toggleConfirmPass} />
-          )}
+          <span>{errors.confirmPass?.message}</span>
           <ButtonComponent type="submit">Criar</ButtonComponent>
         </form>
       </Container>
