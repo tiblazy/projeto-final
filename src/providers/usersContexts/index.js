@@ -6,6 +6,7 @@ import {
   userToken,
   getUserToken,
   setUserToken,
+  userListTables,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -18,7 +19,6 @@ export const UsersProvider = ({ children }) => {
   const navigate = useNavigate();
   const [logado, setLogado] = useState(false);
   const [userData, setUserData] = useState([]);
-
 
   const toastSuccess = (message, route) => {
     toast.success(message, {
@@ -49,9 +49,8 @@ export const UsersProvider = ({ children }) => {
     baseAPI
       .post("/login", data)
       .then((res) => {
-
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
-
+        localStorage.setItem(userListTables, JSON.stringify(res.data.user.myTables));
         toastSuccess("Login realizado com sucesso!", ROUTES.home);
 
         setLogado(true);
@@ -59,7 +58,6 @@ export const UsersProvider = ({ children }) => {
         setUserData(res.data.user);
       })
       .catch((err) => {
-
         toastError("Login falhou, verifique seu email ou senha!");
       });
   }

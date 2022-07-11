@@ -93,6 +93,7 @@ function TableModal({ tableVisible, setTableVisible }) {
     //trocar userId por valor dinamico
     const newTable = {
       tablename: formData.name,
+      visibility: formData.visibility,
       password: formData.password,
       userId: 6,
       system: formData.system,
