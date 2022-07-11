@@ -14,7 +14,7 @@ export const Routes = () => {
       <Route path={home} element={<Home />} />
       <Route path={login} element={<Login />} />
       <Route path={register} element={<Register />} />
-      {/* <Route path={tables} element={<Table  />} /> */}
+      <Route path={tables} element={<Table />} />
     </Switch>
   );
 };
