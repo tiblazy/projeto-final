@@ -1,4 +1,83 @@
-function CreateTable() {
-  return <></>;
+import { ButtonComponent } from "../../Button/style";
+import MesaInfo from "../../Mesa-info";
+import OptionsComponent from "../../Options";
+import { AiFillCrown } from "react-icons/ai";
+import { Header, Title } from "../Home/style";
+import { FaUserAlt } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import ROUTES from "../../../constants/routes";
+import { useContext, useState, useEffect } from "react";
+import { TablesContext } from "../../../providers/tablesContexts";
+import { UsersContext } from "../../../providers/usersContexts";
+
+function Table() {
+  const { table } = useContext(TablesContext);
+  const navigate = useNavigate();
+  const { home } = ROUTES;
+  const { id } = useParams();
+  const [selectedTable, setSelectedTable] = useState([]);
+  const { userData } = useContext(UsersContext);
+  console.log(table);
+
+  function filtered() {
+    let newTable = table.filter((elem) => {
+      return parseInt(id) === parseInt(elem.id);
+    });
+    return setSelectedTable(newTable[0]);
+  }
+  useEffect(() => {
+    filtered();
+  }, []);
+
+  console.log(selectedTable);
+  console.log(userData);
+
+  function handleLogout() {
+    setSelectedTable([]);
+    navigate(home);
+  }
+  return (
+    <div>
+      <Header>
+        <nav>
+          <section>
+            <img
+              src={
+                userData.perfil
+                  ? userData.perfil
+                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
+              }
+            />
+            <Title>A Taverna</Title>
+          </section>
+          <OptionsComponent>
+            <ButtonComponent>Criar Personagem</ButtonComponent>
+            <ButtonComponent>Adicionar participante</ButtonComponent>
+            <ButtonComponent>Sair</ButtonComponent>
+          </OptionsComponent>
+        </nav>
+        <section>
+          <ButtonComponent>Criar Personagem</ButtonComponent>
+          <ButtonComponent>Adicionar participante</ButtonComponent>
+          <ButtonComponent onClick={() => handleLogout()}>Sair</ButtonComponent>
+        </section>
+      </Header>
+      <MesaInfo>
+        <section>
+          <h2>{selectedTable.tablename}</h2>
+          <p>
+            <AiFillCrown /> {selectedTable.username}
+          </p>
+        </section>
+        <div>
+          <p>Criado em: </p>
+          <p>Sistema: {selectedTable.system}</p>
+          <p>
+            <FaUserAlt /> {selectedTable.participants?.length}
+          </p>
+        </div>
+      </MesaInfo>
+    </div>
+  );
 }
-export default CreateTable;
+export default Table;

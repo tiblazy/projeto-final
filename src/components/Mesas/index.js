@@ -3,7 +3,14 @@ import { FaUserAlt } from "react-icons/fa";
 import { Card } from "./style";
 import exemplo1 from "../../images/exemplo1.jpg";
 
-function Mesas({ tablename, owner, system, visibility = "Private", image, participants }) {
+function Mesas({
+  tablename,
+  username,
+  system,
+  visibility = "Private",
+  image,
+  participants,
+}) {
   return (
     <Card image={image ? image : exemplo1}>
       <section>
@@ -15,7 +22,7 @@ function Mesas({ tablename, owner, system, visibility = "Private", image, partic
       </section>
       <div>
         <p>
-          <AiFillCrown /> {owner}
+          <AiFillCrown /> {username}
         </p>
         <p>
           <FaUserAlt /> {participants}

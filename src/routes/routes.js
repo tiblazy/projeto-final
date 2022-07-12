@@ -1,6 +1,6 @@
 import { Routes as Switch, Route } from "react-router-dom";
 
-import Dashboard from "../components/Pages/Dashboard";
+import Table from "../components/Pages/Table";
 import { Login } from "../components/Pages/Login";
 import { Register } from "../components/Pages/Register";
 import ROUTES from "../constants/routes";
@@ -14,7 +14,7 @@ export const Routes = () => {
       <Route path={home} element={<Home />} />
       <Route path={login} element={<Login />} />
       <Route path={register} element={<Register />} />
-      {/* <Route path={tables} element={<Table  />} /> */}
+      <Route path={tables} element={<Table />} />
     </Switch>
   );
 };

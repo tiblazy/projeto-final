@@ -4,7 +4,6 @@ const ROUTES = {
   register: "/register",
   tables: `/tables/:id`,
   characters: `/characters/:id`,
-  dashboard: "/dashboard",
 };
 
 export default ROUTES;
