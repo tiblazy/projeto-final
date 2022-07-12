@@ -9,6 +9,8 @@ import ROUTES from "../../../constants/routes";
 import { useContext, useState, useEffect } from "react";
 import { TablesContext } from "../../../providers/tablesContexts";
 import { UsersContext } from "../../../providers/usersContexts";
+import TextFieldComponent from "../../TextField";
+import { MesaContainer } from "./style";
 
 function Table() {
   const { table } = useContext(TablesContext);
@@ -17,7 +19,10 @@ function Table() {
   const { id } = useParams();
   const [selectedTable, setSelectedTable] = useState([]);
   const { userData } = useContext(UsersContext);
-  console.log(table);
+
+  const [master, setMaster] = useState(false);
+
+  //alterar esse state para renderizar a tela de jogador e tela de mestre
 
   function filtered() {
     let newTable = table.filter((elem) => {
@@ -28,9 +33,6 @@ function Table() {
   useEffect(() => {
     filtered();
   }, []);
-
-  console.log(selectedTable);
-  console.log(userData);
 
   function handleLogout() {
     setSelectedTable([]);
@@ -50,17 +52,33 @@ function Table() {
             />
             <Title>A Taverna</Title>
           </section>
-          <OptionsComponent>
+          {master ? (
+            <OptionsComponent>
+              <ButtonComponent>Criar Personagem</ButtonComponent>
+              <ButtonComponent>Adicionar participante</ButtonComponent>
+              <ButtonComponent>Sair</ButtonComponent>
+            </OptionsComponent>
+          ) : (
+            <OptionsComponent>
+              <ButtonComponent>Sair</ButtonComponent>
+            </OptionsComponent>
+          )}
+        </nav>
+        {master ? (
+          <section>
             <ButtonComponent>Criar Personagem</ButtonComponent>
             <ButtonComponent>Adicionar participante</ButtonComponent>
-            <ButtonComponent>Sair</ButtonComponent>
-          </OptionsComponent>
-        </nav>
-        <section>
-          <ButtonComponent>Criar Personagem</ButtonComponent>
-          <ButtonComponent>Adicionar participante</ButtonComponent>
-          <ButtonComponent onClick={() => handleLogout()}>Sair</ButtonComponent>
-        </section>
+            <ButtonComponent onClick={() => handleLogout()}>
+              Sair
+            </ButtonComponent>
+          </section>
+        ) : (
+          <section>
+            <ButtonComponent onClick={() => handleLogout()}>
+              Sair
+            </ButtonComponent>
+          </section>
+        )}
       </Header>
       <MesaInfo>
         <section>
@@ -77,6 +95,11 @@ function Table() {
           </p>
         </div>
       </MesaInfo>
+      <MesaContainer>
+        <TextFieldComponent title={"Quadro de avisos"} master={master} />
+        <TextFieldComponent title={"Lore da mesa"} master={master} />
+        <TextFieldComponent title={"Detalhes da mesa"} master={master} />
+      </MesaContainer>
     </div>
   );
 }

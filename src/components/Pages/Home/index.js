@@ -188,7 +188,9 @@ function Home() {
                     tablename={
                       item.tablename ? item.tablename : "Mesa sem nome"
                     }
-                    owner={item.userId ? item.userId : "Sem nome do mestre"}
+                    username={
+                      item.username ? item.username : "Sem nome do mestre"
+                    }
                     system={item.system ? item.system : "NULL"}
                     visibility={item.visibility}
                     image={item.image}
