@@ -12,13 +12,19 @@ import ROUTES from "../../../constants/routes";
 import { UsersContext } from "../../../providers/usersContexts";
 import { PasswordModal } from "../../PasswordModal";
 import TableModal from "../../TableModal";
+import ListHome from "../../ListHome";
+import Dashboard from "../../Dashboard";
 
 function Home() {
   const { logado, userData, setLogado } = useContext(UsersContext);
-  const { table, privateTable } = useContext(TablesContext);
+  const { table, privateTable, Private } = useContext(TablesContext);
   const navigate = useNavigate();
   const { login, register } = ROUTES;
-  console.log(table);
+  const [filtered, setFiltered] = useState([]);
+  const [local, setLocal] = useState(false);
+  const [arr, setArr] = useState([...table]);
+
+  const [input, setInput] = useState("");
 
   const [tableId, setTableId] = useState(null);
   const [tablePassword, setTablePassword] = useState(null);
@@ -29,9 +35,33 @@ function Home() {
     useState(false);
   const [isHiddenPasswordModal, setIsHiddenPasswordModal] = useState(false);
 
+  if (logado) {
+    Private();
+    // console.log(privateTable);
+  }
+
   function handleLogout() {
     setLogado(false);
     localStorage.removeItem("@HELLFIRE/userAccess");
+    setLocal(false);
+  }
+
+  if (input && logado) {
+    let list = privateTable.filter((elem) => {
+      let lower = elem.tablename.toLowerCase();
+      let Lower = input.toLocaleLowerCase();
+      return lower.includes(Lower);
+    });
+    setInput("");
+    return setFiltered(list);
+  } else if (input && !logado) {
+    let list = table.filter((elem) => {
+      let lower = elem.tablename.toLowerCase();
+      let Lower = input.toLocaleLowerCase();
+      return lower.includes(Lower);
+    });
+    setInput("");
+    return setFiltered(list);
   }
 
   return (
@@ -47,10 +77,12 @@ function Home() {
                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
                 }
               />
-              <Title>Bem vindo(a) {userData.username}!</Title>
+              <Title onClick={() => setFiltered([])}>
+                Bem vindo(a) {userData.username}!
+              </Title>
             </section>
           ) : (
-            <Title>A taverna</Title>
+            <Title onClick={() => setFiltered([])}>A taverna</Title>
           )}
 
           <OptionsComponent>
@@ -79,9 +111,16 @@ function Home() {
             )}
           </OptionsComponent>
         </nav>
+        {logado && (
+          <h2 onClick={() => setLocal(!local)}>
+            {local ? "Descobrir" : "Suas mesas"}
+          </h2>
+        )}
+
         <TextField
           sx={{ backgroundColor: "#D3CDC0" }}
           placeholder="Pesquisar mesa..."
+          onChange={(event) => setInput(event.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -145,61 +184,21 @@ function Home() {
       <List>
         {logado ? <h2>Suas mesas</h2> : <h2>Lista de mesas públicas</h2>}
         <ul>
-          {logado
-            ? privateTable?.map((item) => (
-                <li
-                  key={item.id}
-                  onClick={() => {
-                    console.log(item.id);
-                    if (item.visibility === "public") {
-                      navigate(`tables/${item.id}`);
-                    } else {
-                      console.log(item.password);
-                      setIsHiddenPasswordModal(true);
-                      setTableId(item.id);
-                      setTablePassword(item.password);
-                    }
-                  }}
-                >
-                  <Mesas
-                    tablename={
-                      item.tablename ? item.tablename : "Mesa sem nome"
-                    }
-                    username={
-                      item.username ? item.username : "Sem nome do mestre"
-                    }
-                    system={item.system ? item.system : "NULL"}
-                    visibility={item.visibility}
-                    image={item.image}
-                    participants={
-                      item.participants ? item.participants.length : "NaN"
-                    }
-                  />
-                </li>
-              ))
-            : tablePub.map((item) => (
-                <li
-                  key={item.id}
-                  onClick={() => {
-                    navigate(login);
-                  }}
-                >
-                  <Mesas
-                    tablename={
-                      item.tablename ? item.tablename : "Mesa sem nome"
-                    }
-                    username={
-                      item.username ? item.username : "Sem nome do mestre"
-                    }
-                    system={item.system ? item.system : "NULL"}
-                    visibility={item.visibility}
-                    image={item.image}
-                    participants={
-                      item.participants ? item.participants.length : "NaN"
-                    }
-                  />
-                </li>
-              ))}
+          {local ? (
+            <Dashboard
+              privateTable={filtered.length > 0 ? filtered : privateTable}
+              setIsHiddenPasswordModal={setIsHiddenPasswordModal}
+              setTableId={setTableId}
+              setTablePassword={setTablePassword}
+            />
+          ) : (
+            <ListHome
+              tablePub={filtered.length > 0 ? filtered : table}
+              setIsHiddenPasswordModal={setIsHiddenPasswordModal}
+              setTableId={setTableId}
+              setTablePassword={setTablePassword}
+            />
+          )}
         </ul>
       </List>
 

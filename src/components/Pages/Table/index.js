@@ -11,6 +11,7 @@ import { TablesContext } from "../../../providers/tablesContexts";
 import { UsersContext } from "../../../providers/usersContexts";
 import TextFieldComponent from "../../TextField";
 import { MesaContainer } from "./style";
+import CharModal from "../../CharModal";
 
 function Table() {
   const { table } = useContext(TablesContext);
@@ -20,9 +21,11 @@ function Table() {
   const [selectedTable, setSelectedTable] = useState([]);
   const { userData } = useContext(UsersContext);
 
-  const [master, setMaster] = useState(false);
+  const [master, setMaster] = useState(true);
 
   //alterar esse state para renderizar a tela de jogador e tela de mestre
+
+  const [charVisible, setCharVisible] = useState(false);
 
   function filtered() {
     let newTable = table.filter((elem) => {
@@ -54,7 +57,9 @@ function Table() {
           </section>
           {master ? (
             <OptionsComponent>
-              <ButtonComponent>Criar Personagem</ButtonComponent>
+              <ButtonComponent onClick={() => setCharVisible(true)}>
+                Criar Personagem
+              </ButtonComponent>
               <ButtonComponent>Adicionar participante</ButtonComponent>
               <ButtonComponent>Sair</ButtonComponent>
             </OptionsComponent>
@@ -66,7 +71,9 @@ function Table() {
         </nav>
         {master ? (
           <section>
-            <ButtonComponent>Criar Personagem</ButtonComponent>
+            <ButtonComponent onClick={() => setCharVisible(true)}>
+              Criar Personagem
+            </ButtonComponent>
             <ButtonComponent>Adicionar participante</ButtonComponent>
             <ButtonComponent onClick={() => handleLogout()}>
               Sair
@@ -100,6 +107,7 @@ function Table() {
         <TextFieldComponent title={"Lore da mesa"} master={master} />
         <TextFieldComponent title={"Detalhes da mesa"} master={master} />
       </MesaContainer>
+      <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />
     </div>
   );
 }

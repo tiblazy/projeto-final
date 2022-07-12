@@ -5,6 +5,7 @@ export const Title = styled.h1`
   color: #7e0902;
   font-size: 24px;
   margin-bottom: 10px;
+  cursor: pointer;
 
   @media only screen and (min-width: 600px) {
     font-size: 32px;
