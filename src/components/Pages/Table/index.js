@@ -12,6 +12,7 @@ import { UsersContext } from "../../../providers/usersContexts";
 import TextFieldComponent from "../../TextField";
 import { MesaContainer } from "./style";
 import CharModal from "../../CharModal";
+import ParticipantModal from "../../ParticipantModal";
 
 function Table() {
   const { table } = useContext(TablesContext);
@@ -26,6 +27,7 @@ function Table() {
   //alterar esse state para renderizar a tela de jogador e tela de mestre
 
   const [charVisible, setCharVisible] = useState(false);
+  const [participantVisible, setParticipantVisible] = useState(false);
 
   function filtered() {
     let newTable = table.filter((elem) => {
@@ -60,12 +62,18 @@ function Table() {
               <ButtonComponent onClick={() => setCharVisible(true)}>
                 Criar Personagem
               </ButtonComponent>
-              <ButtonComponent>Adicionar participante</ButtonComponent>
-              <ButtonComponent>Sair</ButtonComponent>
+              <ButtonComponent onClick={() => setParticipantVisible(true)}>
+                Adicionar participante
+              </ButtonComponent>
+              <ButtonComponent onClick={() => handleLogout()}>
+                Sair
+              </ButtonComponent>
             </OptionsComponent>
           ) : (
             <OptionsComponent>
-              <ButtonComponent>Sair</ButtonComponent>
+              <ButtonComponent onClick={() => handleLogout()}>
+                Sair
+              </ButtonComponent>
             </OptionsComponent>
           )}
         </nav>
@@ -74,7 +82,9 @@ function Table() {
             <ButtonComponent onClick={() => setCharVisible(true)}>
               Criar Personagem
             </ButtonComponent>
-            <ButtonComponent>Adicionar participante</ButtonComponent>
+            <ButtonComponent onClick={() => setParticipantVisible(true)}>
+              Adicionar participante
+            </ButtonComponent>
             <ButtonComponent onClick={() => handleLogout()}>
               Sair
             </ButtonComponent>
@@ -108,6 +118,10 @@ function Table() {
         <TextFieldComponent title={"Detalhes da mesa"} master={master} />
       </MesaContainer>
       <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />
+      <ParticipantModal
+        participantVisible={participantVisible}
+        setParticipantVisible={setParticipantVisible}
+      />
     </div>
   );
 }
