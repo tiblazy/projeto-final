@@ -109,8 +109,10 @@ function Table() {
         </div>
       </MesaInfo>
       <MesaContainer>
+        
         <TextFieldComponent title={"Quadro de avisos"} master={master} />
         <TextFieldComponent title={"Lore da mesa"} master={master} />
+
         <TextFieldComponent title={"Detalhes da mesa"} master={master} />
       </MesaContainer>
       <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />
