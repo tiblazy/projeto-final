@@ -71,9 +71,9 @@ export const schemaParticipant = () => {
 
 export const schemaEditProfile = () => {
   const schema = yup.object().shape({
-    name: yup.string(),
-    email: yup.string(),
-    photo: yup.string(),
+    name: yup.string().optional(),
+    email: yup.string().optional(),
+    photo: yup.string().optional(),
   });
 
   return schema;

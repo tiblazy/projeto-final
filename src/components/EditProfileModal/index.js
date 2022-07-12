@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Container } from "./style";
 import { schemaEditProfile } from "../../validators/yup";
-import axios from "axios";
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
 
@@ -50,13 +49,28 @@ function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
         <h1>Edite seu perfil</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nome</label>
-          <InputComponent type="name" name="name" {...register("name")} />
+          <InputComponent
+            type="name"
+            name="name"
+            {...register("name")}
+            value={userInfo.name}
+          />
           <span>{errors.name?.message}</span>
           <label htmlFor="email">Email</label>
-          <InputComponent type="email" name="email" {...register("email")} />
+          <InputComponent
+            type="email"
+            name="email"
+            {...register("email")}
+            value={userInfo.email}
+          />
           <span>{errors.email?.message}</span>
           <label htmlFor="photo">Foto de perfil</label>
-          <InputComponent type="url" name="photo" {...register("photo")} />
+          <InputComponent
+            type="url"
+            name="photo"
+            {...register("photo")}
+            value={userInfo.img}
+          />
           <span>{errors.url?.message}</span>
           <ButtonComponent type="submit">Editar</ButtonComponent>
         </form>
