@@ -65,9 +65,13 @@ function Table() {
               <ButtonComponent onClick={() => setParticipantVisible(true)}>
                 Adicionar participante
               </ButtonComponent>
+<<<<<<< HEAD
               <ButtonComponent onClick={() => handleLogout()}>
                 Sair
               </ButtonComponent>
+=======
+              <ButtonComponent>Sair</ButtonComponent>
+>>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
             </OptionsComponent>
           ) : (
             <OptionsComponent>
@@ -113,8 +117,10 @@ function Table() {
         </div>
       </MesaInfo>
       <MesaContainer>
+        
         <TextFieldComponent title={"Quadro de avisos"} master={master} />
         <TextFieldComponent title={"Lore da mesa"} master={master} />
+
         <TextFieldComponent title={"Detalhes da mesa"} master={master} />
       </MesaContainer>
       <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />

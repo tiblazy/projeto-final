@@ -8,10 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaPassword } from "../../validators/yup";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Container } from "./style";
 import { InputComponent } from "../Input/style";
 import { ButtonComponent } from "../Button/style";
 import { useNavigate } from "react-router-dom";
+
+import { Container, InputContainer } from "../Modals/style";
 
 export const PasswordModal = ({
   isVisible,
@@ -69,21 +70,22 @@ export const PasswordModal = ({
         <h1>Entrar nessa mesa</h1>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Senha</label>
-
-          <InputComponent
-            placeholder="insira a senha da sala"
-            type={isHidden ? "text" : "password"}
-            name="password"
-            {...register("password")}
-            InputProps={{
-              endAdornment: isHidden ? (
-                <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
-              ) : (
-                <AiFillEye onClick={() => setIsHidden(!isHidden)} />
-              ),
-            }}
-          />
+          <InputContainer>
+            <label htmlFor="password">Senha</label>
+            <InputComponent
+              placeholder="insira a senha da sala"
+              type={isHidden ? "text" : "password"}
+              name="password"
+              {...register("password")}
+              InputProps={{
+                endAdornment: isHidden ? (
+                  <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
+                ) : (
+                  <AiFillEye onClick={() => setIsHidden(!isHidden)} />
+                ),
+              }}
+            />
+          </InputContainer>
 
           {error ? (
             <p>{error}</p>

@@ -1,6 +1,5 @@
 import Rodal from "rodal";
 import { useContext, useEffect, useState } from "react";
-import { Container } from "./style";
 import { InputComponent } from "../Input/style";
 import { TablesContext } from "../../providers/tablesContexts";
 import "rodal/lib/rodal.css";
@@ -13,6 +12,7 @@ import { IoLogoGameControllerA } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
+import { CheckBoxContainer, Container, InputContainer } from "../Modals/style";
 
 import { toast } from "react-toastify";
 
@@ -62,9 +62,10 @@ function TableModal({ tableVisible, setTableVisible }) {
 
   const customStyles = {
     width: "75%",
-    maxWidth: "450px",
-    height: "75%",
-    maxHeight: "600px",
+    maxWidth: "420px",
+    height: "85%",
+    maxHeight: "620px",
+    borderRadius: "20px",
   };
 
   const formSchema = schemaCreateTable();
@@ -121,69 +122,83 @@ function TableModal({ tableVisible, setTableVisible }) {
       <Container>
         <h1>Criar mesa</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="name">Nome da mesa</label>
-          <InputComponent
-            type="name"
-            name="name"
-            {...register("name")}
-            InputProps={{
-              startAdornment: <FaUserCircle />,
-            }}
-          />
-          <span>{errors.name?.message}</span>
-          <label htmlFor="system">Sistema de jogo</label>
-          <InputComponent
-            type="text"
-            name="system"
-            {...register("system")}
-            InputProps={{
-              startAdornment: <IoLogoGameControllerA />,
-            }}
-          />
-          <span>{errors.system?.message}</span>
-          <InputComponent
-            type="checkbox"
-            name="private"
-            onClick={() => {
-              setPrivateTable(!privateTable);
-            }}
-            {...register("visibility")}
-          />
-          <label htmlFor="private">Mesa privada?</label>
-          <label htmlFor="password">Senha</label>
-          <InputComponent
-            type={passwordShown ? "text" : "password"}
-            name="password"
-            disabled={!privateTable}
-            {...register("password")}
-            onChange={(event) => setPasswordInput(event.target.value)}
-            value={passwordInput}
-            InputProps={{
-              endAdornment: !passwordShown ? (
-                <AiFillEye onClick={togglePassword} />
-              ) : (
-                <AiFillEyeInvisible onClick={togglePassword} />
-              ),
-            }}
-          />
-          <span>{errors.password?.message}</span>
-          <label htmlFor="confirmPass">Confirme sua senha</label>
-          <InputComponent
-            type={confirmShown ? "text" : "password"}
-            name="confirmPass"
-            disabled={!privateTable}
-            {...register("confirmPass")}
-            onChange={(event) => setConfirmpassInput(event.target.value)}
-            value={confirmPassInput}
-            InputProps={{
-              endAdornment: !confirmShown ? (
-                <AiFillEye onClick={toggleConfirmPass} />
-              ) : (
-                <AiFillEyeInvisible onClick={toggleConfirmPass} />
-              ),
-            }}
-          />
-          <span>{errors.confirmPass?.message}</span>
+          <InputContainer>
+            <label htmlFor="name">Nome da mesa</label>
+            <InputComponent
+              type="name"
+              name="name"
+              {...register("name")}
+              InputProps={{
+                startAdornment: <FaUserCircle />,
+              }}
+            />
+            <span>{errors.name?.message}</span>
+          </InputContainer>
+
+          <InputContainer>
+            <label htmlFor="system">Sistema de jogo</label>
+            <InputComponent
+              type="text"
+              name="system"
+              {...register("system")}
+              InputProps={{
+                startAdornment: <IoLogoGameControllerA />,
+              }}
+            />
+            <span>{errors.system?.message}</span>
+          </InputContainer>
+
+          <CheckBoxContainer>
+            <input
+              type="checkbox"
+              name="private"
+              onClick={() => {
+                setPrivateTable(!privateTable);
+              }}
+              {...register("visibility")}
+            />
+            <label htmlFor="private">Mesa privada?</label>
+          </CheckBoxContainer>
+
+          <InputContainer>
+            <label htmlFor="password">Senha</label>
+            <InputComponent
+              type={passwordShown ? "text" : "password"}
+              name="password"
+              disabled={!privateTable}
+              {...register("password")}
+              onChange={(event) => setPasswordInput(event.target.value)}
+              value={passwordInput}
+              InputProps={{
+                endAdornment: !passwordShown ? (
+                  <AiFillEye onClick={togglePassword} />
+                ) : (
+                  <AiFillEyeInvisible onClick={togglePassword} />
+                ),
+              }}
+            />
+            <span>{errors.password?.message}</span>
+          </InputContainer>
+
+          <InputContainer>
+            <label htmlFor="confirmPass">Confirme sua senha</label>
+            <InputComponent
+              type={confirmShown ? "text" : "password"}
+              name="confirmPass"
+              disabled={!privateTable}
+              {...register("confirmPass")}
+              onChange={(event) => setConfirmpassInput(event.target.value)}
+              value={confirmPassInput}
+              InputProps={{
+                endAdornment: !confirmShown ? (
+                  <AiFillEye onClick={toggleConfirmPass} />
+                ) : (
+                  <AiFillEyeInvisible onClick={toggleConfirmPass} />
+                ),
+              }}
+            />
+            <span>{errors.confirmPass?.message}</span>
+          </InputContainer>
           <ButtonComponent type="submit">Criar</ButtonComponent>
         </form>
       </Container>
