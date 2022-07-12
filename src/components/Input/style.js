@@ -22,4 +22,8 @@ export const InputComponent = styled(TextField)`
       border-color: #7e0902;
     }
   }
+
+  & .MuiInputBase-root.Mui-disabled {
+    background-color: #b3ada2;
+  }
 `;
