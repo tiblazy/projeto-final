@@ -47,26 +47,21 @@ export const TablesProvider = ({ children }) => {
       response && setTable(response.data);
     });
   }
+  listTables();
 
-  useEffect(() => {
-    if (logado) {
-      async function privateListTables() {
-        await baseAPI
-          .get(`/users/${userData.id}?_embed=tables`, {
-            headers: {
-              Authorization: `Bearer ${getUserToken}`,
-            },
-          })
-          .then((response) => {
-            response && setPrivateTable(response.data.tables);
-          });
-      }
-      listTables();
-      privateListTables();
-    } else if (!logado) {
-      listTables();
-    }
-  }, [logado]);
+  function privateListTables() {
+    baseAPI
+      .get(`/users/${userData.id}?_embed=tables`, {
+        headers: {
+          Authorization: `Bearer ${getUserToken}`,
+        },
+      })
+      .then((response) => {
+        response && setPrivateTable(response.data.tables);
+      });
+  }
+
+  const Private = privateListTables;
 
   // const tableCreate = async (data, setLoading) => {
   //   try {
@@ -87,22 +82,6 @@ export const TablesProvider = ({ children }) => {
   //   }
   // };
 
-  const tableUpdate = async (id, data, setLoading) => {
-    try {
-      setLoading(true);
-
-      const response = await baseAPI.patch(`/tables/${id}`, data, {
-        headers: { Authorization: `bearer ${getUserToken}` },
-      });
-      toastSuccess("Mesa atualizada com sucesso");
-    } catch (error) {
-      console.log(error);
-      //   toastError(error)
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const tableDelete = async (id, setLoading) => {
     try {
       setLoading(true);
@@ -121,7 +100,12 @@ export const TablesProvider = ({ children }) => {
 
   return (
     <TablesContext.Provider
-      value={{ tableUpdate, tableDelete, table, privateTable }}
+      value={{
+        tableDelete,
+        table,
+        privateTable,
+        Private,
+      }}
     >
       {children}
     </TablesContext.Provider>

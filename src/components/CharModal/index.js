@@ -6,7 +6,15 @@ import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCharacter } from "../../validators/yup";
+
 import { Container, InputContainer } from "../Modals/style";
+
+import { CharacterContext } from "../../providers/characterContexts";
+import { TablesContext } from "../../providers/tablesContexts";
+import { useParams } from "react-router-dom";
+import { baseAPI } from "../../apis/api";
+import { getUserToken } from "../../constants/localStorages";
+import { toast } from "react-toastify";
 
 function CharModal({ charVisible, setCharVisible }) {
   function hide() {
@@ -30,16 +38,34 @@ function CharModal({ charVisible, setCharVisible }) {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { setCharacterData, createCharacter } = useContext();
+  const { id } = useParams();
+
+  const { setCharacterData, createCharacter } = useContext(CharacterContext);
+  const { tableUpdate } = useContext(TablesContext);
+
+  const toastSuccess = (message, route = null) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   function onSubmit(formData) {
     console.log(formData);
 
-    setCharacterData(formData);
-    createCharacter();
-
-    reset();
-    hide();
+    const response = baseAPI.patch(
+      `/tables/${id}`,
+      { characters: formData },
+      {
+        headers: { Authorization: `Bearer ${getUserToken}` },
+      }
+    );
+    toastSuccess("Mesa atualizada com sucesso");
   }
 
   return (

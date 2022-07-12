@@ -9,6 +9,10 @@ import ROUTES from "../../../constants/routes";
 import { useContext, useState, useEffect } from "react";
 import { TablesContext } from "../../../providers/tablesContexts";
 import { UsersContext } from "../../../providers/usersContexts";
+import TextFieldComponent from "../../TextField";
+import { MesaContainer } from "./style";
+import CharModal from "../../CharModal";
+import ParticipantModal from "../../ParticipantModal";
 
 function Table() {
   const { table } = useContext(TablesContext);
@@ -17,7 +21,13 @@ function Table() {
   const { id } = useParams();
   const [selectedTable, setSelectedTable] = useState([]);
   const { userData } = useContext(UsersContext);
-  console.log(table);
+
+  const [master, setMaster] = useState(true);
+
+  //alterar esse state para renderizar a tela de jogador e tela de mestre
+
+  const [charVisible, setCharVisible] = useState(false);
+  const [participantVisible, setParticipantVisible] = useState(false);
 
   function filtered() {
     let newTable = table.filter((elem) => {
@@ -28,9 +38,6 @@ function Table() {
   useEffect(() => {
     filtered();
   }, []);
-
-  console.log(selectedTable);
-  console.log(userData);
 
   function handleLogout() {
     setSelectedTable([]);
@@ -50,17 +57,41 @@ function Table() {
             />
             <Title>A Taverna</Title>
           </section>
-          <OptionsComponent>
-            <ButtonComponent>Criar Personagem</ButtonComponent>
-            <ButtonComponent>Adicionar participante</ButtonComponent>
-            <ButtonComponent>Sair</ButtonComponent>
-          </OptionsComponent>
+          {master ? (
+            <OptionsComponent>
+              <ButtonComponent onClick={() => setCharVisible(true)}>
+                Criar Personagem
+              </ButtonComponent>
+              <ButtonComponent onClick={() => setParticipantVisible(true)}>
+                Adicionar participante
+              </ButtonComponent>
+              <ButtonComponent>Sair</ButtonComponent>
+            </OptionsComponent>
+          ) : (
+            <OptionsComponent>
+              <ButtonComponent>Sair</ButtonComponent>
+            </OptionsComponent>
+          )}
         </nav>
-        <section>
-          <ButtonComponent>Criar Personagem</ButtonComponent>
-          <ButtonComponent>Adicionar participante</ButtonComponent>
-          <ButtonComponent onClick={() => handleLogout()}>Sair</ButtonComponent>
-        </section>
+        {master ? (
+          <section>
+            <ButtonComponent onClick={() => setCharVisible(true)}>
+              Criar Personagem
+            </ButtonComponent>
+            <ButtonComponent onClick={() => setParticipantVisible(true)}>
+              Adicionar participante
+            </ButtonComponent>
+            <ButtonComponent onClick={() => handleLogout()}>
+              Sair
+            </ButtonComponent>
+          </section>
+        ) : (
+          <section>
+            <ButtonComponent onClick={() => handleLogout()}>
+              Sair
+            </ButtonComponent>
+          </section>
+        )}
       </Header>
       <MesaInfo>
         <section>
@@ -77,6 +108,16 @@ function Table() {
           </p>
         </div>
       </MesaInfo>
+      <MesaContainer>
+        <TextFieldComponent title={"Quadro de avisos"} master={master} />
+        <TextFieldComponent title={"Lore da mesa"} master={master} />
+        <TextFieldComponent title={"Detalhes da mesa"} master={master} />
+      </MesaContainer>
+      <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />
+      <ParticipantModal
+        participantVisible={participantVisible}
+        setParticipantVisible={setParticipantVisible}
+      />
     </div>
   );
 }
