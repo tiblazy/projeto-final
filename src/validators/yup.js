@@ -59,3 +59,12 @@ export const schemaCharacter = () => {
 
   return schema;
 };
+
+export const schemaParticipant = () => {
+  const schema = yup.object().shape({
+    name: yup.string().required("Nome obrigatório"),
+    email: yup.string().email("Formato inválido").required("Email obrigatório"),
+  });
+
+  return schema;
+};
