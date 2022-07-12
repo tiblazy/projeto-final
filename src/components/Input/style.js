@@ -11,6 +11,7 @@ export const InputComponent = styled(TextField)`
 
   & .MuiInputBase-root {
     background-color: #d3cdc0;
+    border-radius: 8px;
 
     & .MuiInputBase-input {
       color: #1b2c26;
@@ -24,6 +25,10 @@ export const InputComponent = styled(TextField)`
   }
 
   & .MuiInputBase-root.Mui-disabled {
-    background-color: #b3ada2;
+    background-color: rgba(211, 205, 192, 0.41);
+  }
+
+  & .MuiInputAdornment-root {
+    width: 20px;
   }
 `;

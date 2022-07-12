@@ -1,11 +1,11 @@
 import Rodal from "rodal";
-import { Container } from "./style";
 import { InputComponent } from "../Input/style";
 import "rodal/lib/rodal.css";
 import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaParticipant } from "../../validators/yup";
+import { Container, InputContainer } from "../Modals/style";
 
 function ParticipantModal({ participantVisible, setParticipantVisible }) {
   function hide() {
@@ -15,8 +15,9 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
   const customStyles = {
     width: "75%",
     maxWidth: "450px",
-    height: "75%",
-    maxHeight: "600px",
+    height: "50%",
+    maxHeight: "400px",
+    borderRadius: "20px",
   };
 
   const schema = schemaParticipant();
@@ -43,12 +44,16 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
       <Container>
         <h1>Adicione um participante</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="name">Nome do participante</label>
-          <InputComponent type="name" name="name" {...register("name")} />
-          <span>{errors.name?.message}</span>
-          <label htmlFor="email">Email</label>
-          <InputComponent type="email" name="email" {...register("email")} />
-          <span>{errors.email?.message}</span>
+          <InputContainer>
+            <label htmlFor="name">Nome do participante</label>
+            <InputComponent type="name" name="name" {...register("name")} />
+            <span>{errors.name?.message}</span>
+          </InputContainer>
+          <InputContainer>
+            <label htmlFor="email">Email</label>
+            <InputComponent type="email" name="email" {...register("email")} />
+            <span>{errors.email?.message}</span>
+          </InputContainer>
           <ButtonComponent type="submit">Adicionar</ButtonComponent>
         </form>
       </Container>
