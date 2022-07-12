@@ -63,8 +63,8 @@ function TableModal({ tableVisible, setTableVisible }) {
   const customStyles = {
     width: "75%",
     maxWidth: "420px",
-    height: "80%",
-    maxHeight: "600px",
+    height: "85%",
+    maxHeight: "620px",
     borderRadius: "20px",
   };
 

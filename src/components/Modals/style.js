@@ -19,6 +19,7 @@ export const Container = styled.div`
     margin: 0 auto;
     height: 50px;
     max-width: 80%;
+    font-family: "Merienda", cursive;
   }
 
   h1 {
@@ -50,10 +51,14 @@ export const InputContainer = styled.div`
 `;
 
 export const CheckBoxContainer = styled.div`
+  margin: 3% 0;
   margin-left: 10%;
-  margin-bottom: 4%;
 
   input {
     background-color: black;
+  }
+
+  label {
+    margin-left: 8px;
   }
 `;
