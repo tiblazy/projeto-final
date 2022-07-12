@@ -68,3 +68,13 @@ export const schemaParticipant = () => {
 
   return schema;
 };
+
+export const schemaEditProfile = () => {
+  const schema = yup.object().shape({
+    name: yup.string(),
+    email: yup.string(),
+    photo: yup.string(),
+  });
+
+  return schema;
+};
