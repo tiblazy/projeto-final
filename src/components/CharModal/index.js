@@ -76,18 +76,22 @@ function CharModal({ charVisible, setCharVisible }) {
           <InputContainer>
             <label htmlFor="name">Nome do personagem</label>
             <InputComponent type="name" name="name" {...register("name")} />
+            <span>{errors.name?.message}</span>
           </InputContainer>
           <InputContainer>
             <label htmlFor="class">Escolha uma classe</label>
             <InputComponent type="text" name="class" {...register("class")} />
+            <span>{errors.class?.message}</span>
           </InputContainer>
           <InputContainer>
             <label htmlFor="lore">Lore do personagem</label>
             <InputComponent type="text" name="lore" {...register("lore")} />
+            <span>{errors.lore?.message}</span>
           </InputContainer>
           <InputContainer>
             <label htmlFor="photo">Foto de perfil do personagem</label>
             <InputComponent type="url" name="photo" {...register("photo")} />
+            <span>{errors.photo?.message}</span>
           </InputContainer>
           <ButtonComponent type="submit">Criar</ButtonComponent>
         </form>
