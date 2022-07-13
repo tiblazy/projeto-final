@@ -111,7 +111,7 @@ function Table() {
           <p>
             Criado em:{" "}
             {selectedTable.createdAt
-              .split("T")[0]
+              ?.split("T")[0]
               .split("-")
               .reverse()
               .join("/")}
