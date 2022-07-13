@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const DivMain = styled.div`
+  details {
+    display: flex;
+  }
+
   details p {
     padding: 10px;
   }
@@ -35,5 +39,24 @@ export const DivMain = styled.div`
 
   @media screen and (min-width: 601px) {
     display: none;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  margin: 10px 0px 0px 0px 0px;
+  resize: none;
+  background-color: transparent;
+  border: ${(props) => props.border};
+
+  width: 318px;
+  height: 330px;
+
+  text-align: center;
+
+  padding: 5px 0px 0px 0px;
+  font-family: "Poppins", sans-serif;
+
+  &:focus {
+    outline: 1px solid #d3cdc0;
   }
 `;
