@@ -1,17 +1,20 @@
-import Rodal from "rodal";
-import { InputComponent } from "../Input/style";
-import "rodal/lib/rodal.css";
-import { ButtonComponent } from "../Button/style";
+import { useContext } from "react";
+import { TablesContext } from "../../providers/tablesContexts";
+
+import { useParams } from "react-router-dom";
+import { getUserToken } from "../../constants/localStorages";
+import { baseAPI } from "../../apis/api";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaParticipant } from "../../validators/yup";
-import { Container, InputContainer } from "../Modals/style";
-import { baseAPI } from "../../apis/api";
-import { useParams } from "react-router-dom";
-import { getUserToken } from "../../constants/localStorages";
+
 import { toast } from "react-toastify";
-import { useContext } from "react";
-import { TablesContext } from "../../providers/tablesContexts";
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
+import { InputComponent } from "../Input/style";
+import { ButtonComponent } from "../Button/style";
+import { Container, InputContainer } from "../Modals/style";
 
 function ParticipantModal({ participantVisible, setParticipantVisible }) {
   function hide() {

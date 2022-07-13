@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { currentID } from "../../constants/localStorages";
+import ROUTES from "../../constants/routes";
 import Mesas from "../Mesas";
 
 function ListHome({
@@ -14,14 +16,16 @@ function ListHome({
         <li
           key={item.id}
           onClick={() => {
-            console.log(item.id);
             if (item.visibility === "public") {
               navigate(`tables/${item.id}`);
             } else {
-              console.log(item.password);
-              setIsHiddenPasswordModal(true);
-              setTableId(item.id);
-              setTablePassword(item.password);
+              if (localStorage.getItem(currentID)) {
+                setIsHiddenPasswordModal(true);
+                setTableId(item.id);
+                setTablePassword(item.password);
+              } else {
+                navigate(ROUTES.login);
+              }
             }
           }}
         >

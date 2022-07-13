@@ -8,7 +8,6 @@ function Dashboard({
   setTablePassword,
 }) {
   const navigate = useNavigate();
-  //   console.log(privateTable);
   return (
     <>
       {privateTable.map((item) => (
@@ -19,7 +18,6 @@ function Dashboard({
             if (item.visibility === "public") {
               navigate(`tables/${item.id}`);
             } else {
-              console.log(item.password);
               setIsHiddenPasswordModal(true);
               setTableId(item.id);
               setTablePassword(item.password);

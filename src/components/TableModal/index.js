@@ -1,20 +1,20 @@
-import Rodal from "rodal";
-import { useContext, useEffect, useState } from "react";
-import { InputComponent } from "../Input/style";
-import { TablesContext } from "../../providers/tablesContexts";
-import "rodal/lib/rodal.css";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { ButtonComponent } from "../Button/style";
+import { useEffect, useState } from "react";
+import { baseAPI } from "../../apis/api";
+import { getUserToken } from "../../constants/localStorages";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCreateTable } from "../../validators/yup";
-import { IoLogoGameControllerA } from "react-icons/io";
-import { FaUserCircle } from "react-icons/fa";
-import { baseAPI } from "../../apis/api";
-import { getUserToken } from "../../constants/localStorages";
-import { CheckBoxContainer, Container, InputContainer } from "../Modals/style";
 
 import { toast } from "react-toastify";
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
+import { CheckBoxContainer, Container, InputContainer } from "../Modals/style";
+import { IoLogoGameControllerA } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { InputComponent } from "../Input/style";
+import { ButtonComponent } from "../Button/style";
 
 function TableModal({ tableVisible, setTableVisible }) {
   const [privateTable, setPrivateTable] = useState(false);
@@ -22,12 +22,6 @@ function TableModal({ tableVisible, setTableVisible }) {
   const [confirmShown, setConfirmShown] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [confirmPassInput, setConfirmpassInput] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const { tableCreate } = useContext(TablesContext);
-
-  // deve ser chamada no botão que abrir o modal
-  //     setTableVisible(true);
 
   const toastSuccess = (message) => {
     toast.success(message, {
@@ -91,12 +85,11 @@ function TableModal({ tableVisible, setTableVisible }) {
       formData.password = null;
     }
 
-    //trocar userId por valor dinamico
     const newTable = {
       tablename: formData.name,
       visibility: formData.visibility,
       password: formData.password,
-      userId: 6,
+      userId: localStorage.getItem("@HELLFIRE/currentID"),
       system: formData.system,
       image: null,
       lore: null,

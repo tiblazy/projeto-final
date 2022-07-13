@@ -1,20 +1,21 @@
-import Rodal from "rodal";
 import { useContext } from "react";
-import { InputComponent } from "../Input/style";
-import "rodal/lib/rodal.css";
-import { ButtonComponent } from "../Button/style";
+import { TablesContext } from "../../providers/tablesContexts";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCharacter } from "../../validators/yup";
 
-import { Container, InputContainer } from "../Modals/style";
 
-import { CharacterContext } from "../../providers/characterContexts";
-import { TablesContext } from "../../providers/tablesContexts";
 import { useParams } from "react-router-dom";
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
+
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
 import { toast } from "react-toastify";
+import { Container, InputContainer } from "../Modals/style";
+import { ButtonComponent } from "../Button/style";
+import { InputComponent } from "../Input/style";
 
 function CharModal({ charVisible, setCharVisible }) {
   function hide() {
@@ -40,9 +41,6 @@ function CharModal({ charVisible, setCharVisible }) {
 
   const { id } = useParams();
   const { table } = useContext(TablesContext);
-
-  const { setCharacterData, createCharacter } = useContext(CharacterContext);
-  const { tableUpdate } = useContext(TablesContext);
 
   const toastSuccess = (message, route = null) => {
     toast.success(message, {

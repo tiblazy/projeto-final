@@ -1,18 +1,21 @@
-import { ButtonComponent } from "../../Button/style";
-import MesaInfo from "../../Mesa-info";
-import OptionsComponent from "../../Options";
-import { AiFillCrown } from "react-icons/ai";
-import { Header, Title } from "../Home/style";
-import { FaUserAlt } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import ROUTES from "../../../constants/routes";
 import { useContext, useState, useEffect } from "react";
 import { TablesContext } from "../../../providers/tablesContexts";
 import { UsersContext } from "../../../providers/usersContexts";
-import TextFieldComponent from "../../TextField";
-import { MesaContainer } from "./style";
+
+import { useNavigate, useParams } from "react-router-dom";
+import ROUTES from "../../../constants/routes";
+
 import CharModal from "../../CharModal";
 import ParticipantModal from "../../ParticipantModal";
+
+import MesaInfo from "../../Mesa-info";
+import { MesaContainer } from "./style";
+import OptionsComponent from "../../Options";
+import { ButtonComponent } from "../../Button/style";
+import TextFieldComponent from "../../TextField";
+import { AiFillCrown } from "react-icons/ai";
+import { Header, Title } from "../Home/style";
+import { FaUserAlt } from "react-icons/fa";
 
 function Table() {
   const { table } = useContext(TablesContext);
@@ -113,7 +116,6 @@ function Table() {
         </div>
       </MesaInfo>
       <MesaContainer>
-        
         <TextFieldComponent title={"Quadro de avisos"} master={master} />
         <TextFieldComponent title={"Lore da mesa"} master={master} />
 

@@ -1,13 +1,15 @@
-import Rodal from "rodal";
-import "rodal/lib/rodal.css";
-import { InputComponent } from "../Input/style";
-import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaEditProfile } from "../../validators/yup";
+
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
+
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
 import { Container, InputContainer } from "../Modals/style";
+import { InputComponent } from "../Input/style";
+import { ButtonComponent } from "../Button/style";
 
 function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
   function hide() {
