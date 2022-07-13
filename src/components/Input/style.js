@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const InputComponent = styled(TextField)`
+width: ${(props) => props.width || "223px"};
   & .MuiInputLabel-root {
     color: #1b2c26;
     &.Mui-focused {
@@ -14,6 +15,7 @@ export const InputComponent = styled(TextField)`
     border-radius: 8px;
 
     & .MuiInputBase-input {
+
       color: #1b2c26;
     }
   }

@@ -1,93 +1,82 @@
-import styled from "styled-components"; 
-import Imagem from '../../../img/cadastro.jpg'
+import styled from "styled-components";
+import Imagem from "../../../img/cadastro.jpg";
 
 export const Container = styled.div`
+  * {
+    font-family: "Merienda", cursive;
+  }
 
-    *{
-        font-family: 'Merienda', cursive;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100vw;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  @media (min-width: 500px) {
     background-image: url(${Imagem});
-    background-size: 100% 100% ;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-
-`
+  }
+`;
 
 export const Background = styled.div`
-    width: 50vw;
-    height: 100vh;
-    @media (max-width:500px){
-        display: none;
-    }
-
-`
+  width: 50%;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
 
 export const Form = styled.div`
-    width: 50vw;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
+  width: 50vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const Cards = styled.div`
-    width: 60%;
-    min-height: 50vh;
+  width: 100%;
+  @media (min-width: 400px) {
+    width: 400px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 35px;
+  border-radius: 10px;
+
+  background-color: white;
+
+  form {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;
-    border-radius: 10px;
-    
-    background-color: white;
-
-    button{
-        width: 100%;
-        height: 100%;
-        padding: 16px 0px;
-        margin: 25px;
-
-    }
-    form{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        height: 60vh;
-    }
-    a{
-        color:#932b2a;
-        cursor: pointer;
-    }
-    h1{
-        font-weight: 400;
-        font-size: 30px;
-        color: #7E0902;
-    }
-
-`
-export const TextField = styled.div`
+    justify-content: space-between;
+    height: 60vh;
+  }
+  a {
+    color: #932b2a;
+    cursor: pointer;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: 30px;
+    color: #7e0902;
+    margin-bottom: 30px;
+  }
+  p {
+    color: #7e0902;
+    font-size: 13px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
+  }
+`;
+export const A = styled.div`
+  margin-top: 30px;
+  width: 80vw;
 
-    input{
-        width: 100%;
-        height: 100%;
-        padding: 15px;
-        box-sizing: border-box;
-    }
-    label{
-        margin-bottom:10px
-    }
-`
-
+  text-align: center;
+`;
