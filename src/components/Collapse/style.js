@@ -37,7 +37,7 @@ export const DivMain = styled.div`
     }
   }
 
-  @media screen and (min-width: 601px) {
+  @media screen and (min-width: 900px) {
     display: none;
   }
 `;

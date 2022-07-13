@@ -8,7 +8,7 @@ export const Title = styled.h1`
   cursor: pointer;
   margin-left: 20px;
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 860px) {
     font-size: 32px;
   }
 `;
@@ -46,7 +46,7 @@ export const Header = styled.header`
   section {
     display: none;
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 860px) {
     flex-direction: row;
     padding: 0px 5vw 0 5vw;
     display: flex;
@@ -88,7 +88,7 @@ export const TextArea = styled.div`
   hr {
     width: 222px;
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 860px) {
     padding: 0;
     margin-top: 10vh;
     font-size: 26px;
@@ -106,15 +106,19 @@ export const List = styled.div`
     width: fit-content;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 25px;
     font-weight: bold;
     margin-left: 5px;
+    margin-top: 10px;
   }
   ul {
     list-style: none;
     padding: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 860px) {
     padding: 5vw;
 
     h2 {

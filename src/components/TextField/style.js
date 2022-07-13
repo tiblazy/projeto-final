@@ -35,13 +35,15 @@ export const Div = styled.div`
 
     padding-top: 5px;
     font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: large;
 
     &:focus {
       outline: 1px solid #d3cdc0;
     }
   }
 
-  @media screen and (max-width: 601px) {
+  @media screen and (max-width: 900px) {
     display: none;
   }
 `;
