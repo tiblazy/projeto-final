@@ -6,12 +6,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaParticipant } from "../../validators/yup";
 import { Container, InputContainer } from "../Modals/style";
+<<<<<<< HEAD
+import { baseAPI } from "../../apis/api";
+import { useParams } from "react-router-dom";
+import { getUserToken } from "../../constants/localStorages";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { TablesContext } from "../../providers/tablesContexts";
+=======
+>>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
 
 function ParticipantModal({ participantVisible, setParticipantVisible }) {
   function hide() {
     setParticipantVisible(false);
   }
-
+  const { table } = useContext(TablesContext);
   const customStyles = {
     width: "75%",
     maxWidth: "450px",
@@ -29,8 +38,35 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  const toastSuccess = (message, route = null) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const { id } = useParams();
+
   function onSubmit(formData) {
     console.log(formData);
+    const filtered = table.filter((elem) => {
+      return parseInt(elem.id) === parseInt(id);
+    });
+    const newArr = [...filtered[0].participants, formData];
+
+    const response = baseAPI.patch(
+      `/tables/${id}`,
+      { participants: newArr },
+      {
+        headers: { Authorization: `Bearer ${getUserToken}` },
+      }
+    );
+    toastSuccess("Mesa atualizada com sucesso");
 
     reset();
   }

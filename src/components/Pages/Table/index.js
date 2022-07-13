@@ -65,11 +65,19 @@ function Table() {
               <ButtonComponent onClick={() => setParticipantVisible(true)}>
                 Adicionar participante
               </ButtonComponent>
+<<<<<<< HEAD
+              <ButtonComponent onClick={() => handleLogout()}>
+                Sair
+              </ButtonComponent>
+=======
               <ButtonComponent>Sair</ButtonComponent>
+>>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
             </OptionsComponent>
           ) : (
             <OptionsComponent>
-              <ButtonComponent>Sair</ButtonComponent>
+              <ButtonComponent onClick={() => handleLogout()}>
+                Sair
+              </ButtonComponent>
             </OptionsComponent>
           )}
         </nav>

@@ -39,6 +39,7 @@ function CharModal({ charVisible, setCharVisible }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   const { id } = useParams();
+  const { table } = useContext(TablesContext);
 
   const { setCharacterData, createCharacter } = useContext(CharacterContext);
   const { tableUpdate } = useContext(TablesContext);
@@ -58,14 +59,29 @@ function CharModal({ charVisible, setCharVisible }) {
   function onSubmit(formData) {
     console.log(formData);
 
+<<<<<<< HEAD
+    const filtered = table.filter((elem) => {
+      return parseInt(elem.id) === parseInt(id);
+    });
+    const newArr = [...filtered[0].characters, formData];
+
+    console.log(filtered[0]);
+
+=======
+>>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
     const response = baseAPI.patch(
       `/tables/${id}`,
-      { characters: formData },
+      { characters: newArr },
       {
         headers: { Authorization: `Bearer ${getUserToken}` },
       }
     );
     toastSuccess("Mesa atualizada com sucesso");
+<<<<<<< HEAD
+    reset();
+    console.log(response);
+=======
+>>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
   }
 
   return (
