@@ -40,4 +40,8 @@ export const Div = styled.div`
       outline: 1px solid #d3cdc0;
     }
   }
+
+  @media screen and (max-width: 601px) {
+    display: none;
+  }
 `;
