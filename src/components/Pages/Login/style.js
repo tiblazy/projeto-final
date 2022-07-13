@@ -1,4 +1,5 @@
 import styled from "styled-components"; 
+import Imagem from '../../../img/login.jpg'
 
 export const Container = styled.div`
 
@@ -7,58 +8,85 @@ export const Container = styled.div`
     }
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-    min-height: 100vh;
-    padding: clamp(35px, 8%, 70px);
-
-    h1{
-        color: #7E0902;
-    }
-
-    form{
-        display: flex;
-        flex-direction: column;
-    }
-
-    input{
-    width: 100%;
-    font-size: 0.9em;
-    padding: 25px 10px 10px;
-    font-weight: 600;
-
-    background-color: #D3CDC0;
-    border: 2px solid rgba(0, 0, 0, 0);
-    border-radius: 5px;
-    outline: none;
-    color: var(--deep-grey);
-    }
-
-    button{
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-
-    display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: #932B2A;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 60px;
-    color: #D3CDC0;
-    font-size: 20px;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(${Imagem});
+    background-size: 100% 100% ;
+    background-repeat: no-repeat;
+
+`
+
+export const Background = styled.div`
+    width: 50vw;
+    height: 100vh;
+    @media (max-width:500px){
+        display: none;
     }
-    p{
-        color:  #932B2A;
+
+`
+
+export const Form = styled.div`
+    width: 50vw;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const Cards = styled.div`
+    width: 60%;
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 35px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 40px #00000056;
+    background-color: white;
+
+    button{
+        width: 200px;
+        height: 50px;
+        padding: 16px 0px;
+        margin: 25px;
+
     }
-    .link{
-        border: none;
-        background-color:white;
-        color: black;
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 60vh;
+    }
+    a{
+        color:#932b2a;
+        cursor: pointer;
+    }
+    h1{
+        font-weight: 400;
+        font-size: 30px;
+        color: #7E0902;
+    }
+
+`
+export const TextField = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+
+    input{
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    label{
+        margin-bottom:10px
     }
 `

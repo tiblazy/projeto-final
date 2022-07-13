@@ -9,7 +9,7 @@ import { schemaLogin } from "../../../validators/yup";
 import { getUserToken } from "../../../constants/localStorages";
 import ROUTES from "../../../constants/routes";
 
-import { Container } from "./style";
+import { Container,Form,Background,Cards, TextField } from "./style";
 import { InputComponent } from "../../Input/style";
 import { ButtonComponent } from "../../Button/style";
 
@@ -37,26 +37,37 @@ export const Login = () => {
   return (
     <>
       <Container>
+      <Form>
+      <Cards>
         <h1> Login </h1>
         <form onSubmit={handleSubmit(onLoginFunction)}>
+        <TextField>
           <InputComponent
             label="Email"
             placeholder="insira seu email"
             {...register("email")}
           />
           <p>{errors.email?.message}</p>
+          </TextField>
+          <TextField>
           <InputComponent
             label="Password"
             placeholder="insira seu password"
             {...register("password")}
           />
           <p>{errors.password?.message}</p>
+          
           <ButtonComponent onClick={() => handleSubmit(onLoginFunction)}>
             Entrar
           </ButtonComponent>
+          </TextField>
           Ainda não possui cadastro ? Clique
           <a onClick={() => navigate(ROUTES.register)}>aqui</a>
         </form>
+        </Cards>
+        </Form>
+        <Background>
+        </Background>
       </Container>
     </>
   );
