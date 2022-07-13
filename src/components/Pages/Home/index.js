@@ -77,7 +77,10 @@ function Home() {
           {logado ? (
             <section>
               <div>
-                <img src={userData.avatar ? userData.avatar : nonImage} />
+                <img
+                  alt="avatar"
+                  src={userData.avatar ? userData.avatar : nonImage}
+                />
                 <span onClick={() => setEditProfVisible(true)}>
                   Edite seu perfil
                 </span>

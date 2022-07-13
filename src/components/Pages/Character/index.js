@@ -4,10 +4,15 @@ import { ButtonComponent } from "../../Button/style";
 import Collapse from "../../Collapse/index";
 import TextFieldComponent from "../../TextField";
 import { CharacterContainer, CharInfo, Header } from "./style";
+import { useLocation } from "react-router-dom";
 
 const Character = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const { home } = ROUTES;
+
+  console.log(state);
 
   return (
     <>

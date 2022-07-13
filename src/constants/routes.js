@@ -3,7 +3,7 @@ const ROUTES = {
   login: "/login",
   register: "/register",
   tables: `/tables/:id`,
-  characters: `/characters/:id`,
+  characters: `tables/:id/characters/:name`,
 };
 
 export default ROUTES;

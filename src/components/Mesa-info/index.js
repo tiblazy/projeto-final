@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Rodal from "rodal";
 import { ButtonComponent } from "../Button/style";
 import { Container, Card } from "./style";
 import "rodal/lib/rodal.css";
+import ROUTES from "../../constants/routes";
 
 function MesaInfo({ children, personagens, participants }) {
   const [modal, setModal] = useState(false);
   const [array, setArray] = useState([]);
+
+  const navigate = useNavigate();
 
   const customStyles = {
     width: "75%",
@@ -58,7 +62,13 @@ function MesaInfo({ children, personagens, participants }) {
         >
           {array.map((elem, i) => {
             return (
-              <Card key={i}>
+              <Card
+                key={i}
+                onClick={() =>
+                  elem.name &&
+                  navigate(`characters/${elem.name}`, { state: elem })
+                }
+              >
                 <p>{elem.username && elem.username}</p>
                 <p>{elem.name && elem.name}</p>
                 <p>{elem.idade && elem.idade}</p>

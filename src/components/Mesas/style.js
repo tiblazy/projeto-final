@@ -9,16 +9,13 @@ export const Card = styled.div`
   justify-content: center;
   padding: 10px 15px 5px 15px;
   margin-bottom: 20px;
-<<<<<<< HEAD
   max-width: 400px;
-=======
   cursor: pointer;
   transition: 150ms;
 
   &:hover {
     background-color: #d4c6ab;
   }
->>>>>>> 3e9e52d27c0b77ced6819f2db35d1938f68ecf59
 
   section {
     background-image: url(${(props) => props.image});
