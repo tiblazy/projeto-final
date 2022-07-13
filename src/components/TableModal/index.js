@@ -97,6 +97,7 @@ function TableModal({ tableVisible, setTableVisible }) {
       maxParticipants: 5,
       participants: [],
       characters: [],
+      createdAt: new Date(),
     };
 
     const response = await baseAPI.post("/tables", newTable, {
