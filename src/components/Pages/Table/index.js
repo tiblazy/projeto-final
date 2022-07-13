@@ -52,8 +52,6 @@ function Table() {
       // const personagem = selectedTable.characters?.filter((elem) => {
       //   parseInt(elem.userId) === parseInt(userData.id)
       // });
-
-      
       // setPersonagens(personagem);
       //   if (personagem.length > 0) {
 
