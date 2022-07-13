@@ -6,15 +6,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaParticipant } from "../../validators/yup";
 import { Container, InputContainer } from "../Modals/style";
-<<<<<<< HEAD
 import { baseAPI } from "../../apis/api";
 import { useParams } from "react-router-dom";
 import { getUserToken } from "../../constants/localStorages";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { TablesContext } from "../../providers/tablesContexts";
-=======
->>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
 
 function ParticipantModal({ participantVisible, setParticipantVisible }) {
   function hide() {
