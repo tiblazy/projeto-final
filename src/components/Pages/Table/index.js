@@ -108,7 +108,14 @@ function Table() {
           </p>
         </section>
         <div>
-          <p>Criado em: </p>
+          <p>
+            Criado em:{" "}
+            {selectedTable.createdAt
+              ?.split("T")[0]
+              .split("-")
+              .reverse()
+              .join("/")}
+          </p>
           <p>Sistema: {selectedTable.system}</p>
           <p>
             <FaUserAlt /> {selectedTable.participants?.length}
