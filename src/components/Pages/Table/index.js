@@ -50,18 +50,19 @@ function Table() {
       setMaster(true);
       setPersonagens(selectedTable.characters);
     } else {
-      // const personagem = selectedTable.characters?.filter((elem) => {
-      //   parseInt(elem.userId) === parseInt(userData.id)
-      // });
-      // setPersonagens(personagem);
-      //   if (personagem.length > 0) {
-
-      //   } else {
-      //colocar botoes disabled
-      //   }
+      const personagem = selectedTable.characters?.filter((elem) => {
+        return elem.email === userData.email;
+      });
+      if (personagem) {
+        if (personagem.length > 0) {
+          setPersonagens(personagem);
+        } else {
+          setPersonagens([]);
+        }
+      }
     }
   }
-  
+
   useEffect(() => {
     permission();
   }, [selectedTable]);
@@ -130,7 +131,10 @@ function Table() {
           </section>
         )}
       </Header>
-      <MesaInfo>
+      <MesaInfo
+        personagens={personagens}
+        participants={selectedTable.participants}
+      >
         <section>
           <h2>{selectedTable.tablename}</h2>
           <p>
