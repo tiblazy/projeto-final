@@ -30,6 +30,8 @@ function Table() {
 
   const [master, setMaster] = useState(false);
 
+  //alterar esse state para renderizar a tela de jogador e tela de mestre
+
   const [charVisible, setCharVisible] = useState(false);
   const [participantVisible, setParticipantVisible] = useState(false);
   const [EditProfVisible, setEditProfVisible] = useState(false);
@@ -43,6 +45,9 @@ function Table() {
   useEffect(() => {
     filtered();
   }, []);
+
+  const nonImage =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU";
 
   function permission() {
     if (parseInt(selectedTable.userId) === parseInt(userData.id)) {
@@ -71,6 +76,7 @@ function Table() {
     setMaster(false);
     navigate(home);
   }
+
   return (
     <div>
       <Header>
@@ -78,11 +84,8 @@ function Table() {
           <section>
             <div>
               <img
-                src={
-                  userData.avatar
-                    ? userData.avatar
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
-                }
+                alt="avatar"
+                src={userData.avatar ? userData.avatar : nonImage}
               />
               <span onClick={() => setEditProfVisible(true)}>
                 Edite seu perfil

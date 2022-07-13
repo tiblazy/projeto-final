@@ -39,6 +39,8 @@ function TableModal({ tableVisible, setTableVisible }) {
     setTableVisible(false);
   }
 
+  // if()
+
   useEffect(() => {
     if (!privateTable) {
       setPasswordInput("");

@@ -214,6 +214,7 @@ function Home() {
             />
           ) : (
             <ListHome
+              logado={logado}
               tablePub={filtered.length > 0 ? filtered : table}
               setIsHiddenPasswordModal={setIsHiddenPasswordModal}
               setTableId={setTableId}

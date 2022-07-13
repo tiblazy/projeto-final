@@ -7,7 +7,7 @@ import { baseAPI } from "../../apis/api";
 import { toast } from "react-toastify";
 import { getUserToken } from "../../constants/localStorages";
 
-const TextFieldComponent = ({ title, master, children, type }) => {
+const TextFieldComponent = ({ title, master, children = null, type }) => {
   const [active, setActive] = useState(true);
   const [input, setInput] = useState("");
 

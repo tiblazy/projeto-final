@@ -4,6 +4,7 @@ import ROUTES from "../../constants/routes";
 import Mesas from "../Mesas";
 
 function ListHome({
+  logado,
   tablePub,
   setIsHiddenPasswordModal,
   setTableId,
@@ -19,7 +20,7 @@ function ListHome({
             if (item.visibility === "public") {
               navigate(`tables/${item.id}`);
             } else {
-              if (localStorage.getItem(currentID)) {
+              if (logado) {
                 setIsHiddenPasswordModal(true);
                 setTableId(item.id);
                 setTablePassword(item.password);
