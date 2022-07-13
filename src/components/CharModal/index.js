@@ -59,7 +59,6 @@ function CharModal({ charVisible, setCharVisible }) {
   function onSubmit(formData) {
     console.log(formData);
 
-<<<<<<< HEAD
     const filtered = table.filter((elem) => {
       return parseInt(elem.id) === parseInt(id);
     });
@@ -67,8 +66,6 @@ function CharModal({ charVisible, setCharVisible }) {
 
     console.log(filtered[0]);
 
-=======
->>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
     const response = baseAPI.patch(
       `/tables/${id}`,
       { characters: newArr },
@@ -77,11 +74,8 @@ function CharModal({ charVisible, setCharVisible }) {
       }
     );
     toastSuccess("Mesa atualizada com sucesso");
-<<<<<<< HEAD
     reset();
     console.log(response);
-=======
->>>>>>> edad03325593f370d18cea37fa6124b1e28f51c8
   }
 
   return (
