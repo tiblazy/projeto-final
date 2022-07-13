@@ -52,12 +52,11 @@ function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
         <h1>Edite seu perfil</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputContainer>
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="username">Nome de úsuario</label>
             <InputComponent
-              type="name"
-              name="name"
-              {...register("name")}
-              value={userInfo.username}
+              type="username"
+              name="username"
+              {...register("username")}
             />
             <span>{errors.name?.message}</span>
           </InputContainer>
