@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCharacter } from "../../validators/yup";
 
-
 import { useParams } from "react-router-dom";
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
@@ -92,14 +91,14 @@ function CharModal({ charVisible, setCharVisible }) {
             <span>{errors.class?.message}</span>
           </InputContainer>
           <InputContainer>
-            <label htmlFor="lore">Lore do personagem</label>
-            <InputComponent type="text" name="lore" {...register("lore")} />
-            <span>{errors.lore?.message}</span>
+            <label htmlFor="email">email do jogador</label>
+            <InputComponent type="text" name="email" {...register("email")} />
+            <span>{errors.email?.message}</span>
           </InputContainer>
           <InputContainer>
-            <label htmlFor="photo">Foto de perfil do personagem</label>
-            <InputComponent type="url" name="photo" {...register("photo")} />
-            <span>{errors.photo?.message}</span>
+            <label htmlFor="avatar">Foto de perfil do personagem</label>
+            <InputComponent type="url" name="avatar" {...register("avatar")} />
+            <span>{errors.avatar?.message}</span>
           </InputContainer>
           <ButtonComponent type="submit">Criar</ButtonComponent>
         </form>

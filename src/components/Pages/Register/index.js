@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaRegister } from "../../../validators/yup";
 
-import { Container,Form,Background,Cards,A } from "./style";
+import { Container, Form, Background, Cards, A } from "./style";
 import { InputComponent } from "../../Input/style";
 import { ButtonComponent } from "../../Button/style";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -14,7 +14,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import ROUTES from "../../../constants/routes";
 
 export const Register = () => {
-
   const [isHidden, setIsHidden] = useState(false);
   const { userCreate } = useContext(UsersContext);
   const [loading, setLoading] = useState(false);
@@ -50,37 +49,31 @@ export const Register = () => {
   };
 
   return (
-    <>
-        <Container>
-            <Background>
-            </Background>
+    <Container>
+      <Background></Background>
 
-            <Form>
-           
-          <Cards>
+      <Form>
+        <Cards>
           <h1> Cadastro </h1>
           <form onSubmit={handleSubmit(onRegisterFunction)}>
-            
             <InputComponent
-              width = '270px'
+              width="270px"
               label="Nome"
               placeholder="insira seu usuário"
               {...register("name")}
             />
             <p>{errors.name?.message}</p>
-            
-           
+
             <InputComponent
-            width = '270px'
+              width="270px"
               label="Email"
               placeholder="insira seu email"
               {...register("email")}
             />
             <p>{errors.email?.message}</p>
-           
-           
+
             <InputComponent
-            width = '270px'
+              width="270px"
               label="password"
               placeholder="insira seu password"
               type={isHidden ? "text" : "password"}
@@ -94,10 +87,9 @@ export const Register = () => {
               }}
             />
             <p>{errors.password?.message}</p>
-           
-           
+
             <InputComponent
-            width = '270px'
+              width="270px"
               label="confirme sua senha"
               placeholder="confirme sua senha"
               type={isHidden ? "text" : "password"}
@@ -111,17 +103,15 @@ export const Register = () => {
               }}
             />
             <p>{errors.confirmPassword?.message}</p>
-           
-            <ButtonComponent height='60px'>Cadastrar</ButtonComponent>
-      
+
+            <ButtonComponent height="60px">Cadastrar</ButtonComponent>
           </form>
           <A>
-          Já possui cadastro? clique
+            Já possui cadastro? clique
             <a onClick={() => navigate(login)}> aqui </a> para fazer login
           </A>
-          </Cards>
-          </Form>
-        </Container>
-    </>
+        </Cards>
+      </Form>
+    </Container>
   );
 };
