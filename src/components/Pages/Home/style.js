@@ -6,6 +6,7 @@ export const Title = styled.h1`
   font-size: 24px;
   margin-bottom: 10px;
   cursor: pointer;
+  margin-left: 20px;
 
   @media only screen and (min-width: 600px) {
     font-size: 32px;
@@ -26,12 +27,19 @@ export const Header = styled.header`
     section {
       display: flex;
       align-items: center;
-    }
 
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 17vw;
+        align-items: center;
+        gap: 5px;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 
@@ -44,7 +52,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 15vh;
+    height: 17vh;
 
     h2 {
       cursor: pointer;
@@ -54,6 +62,19 @@ export const Header = styled.header`
       width: 30vw;
       display: flex;
       justify-content: space-around;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 17vw;
+        align-items: center;
+        gap: 5px;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 `;

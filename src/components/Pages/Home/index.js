@@ -1,19 +1,22 @@
-import SearchIcon from "@mui/icons-material/Search";
-import { TextField } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import Mesas from "../../Mesas";
-import { Title, Header, TextArea, List } from "./style";
-import { ButtonComponent } from "../../Button/style";
 import { useContext, useState } from "react";
+import { UsersContext } from "../../../providers/usersContexts";
 import { TablesContext } from "../../../providers/tablesContexts";
-import OptionsComponent from "../../Options";
+
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
-import { UsersContext } from "../../../providers/usersContexts";
+
 import { PasswordModal } from "../../PasswordModal";
 import TableModal from "../../TableModal";
 import ListHome from "../../ListHome";
 import Dashboard from "../../Dashboard";
+
+import OptionsComponent from "../../Options";
+import { Title, Header, TextArea, List } from "./style";
+import SearchIcon from "@mui/icons-material/Search";
+import { TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import { ButtonComponent } from "../../Button/style";
+import EditProfileModal from "../../EditProfileModal";
 
 function Home() {
   const { logado, userData, setLogado } = useContext(UsersContext);
@@ -22,29 +25,31 @@ function Home() {
   const { login, register } = ROUTES;
   const [filtered, setFiltered] = useState([]);
   const [local, setLocal] = useState(false);
-  const [arr, setArr] = useState([...table]);
-
   const [input, setInput] = useState("");
 
   const [tableId, setTableId] = useState(null);
   const [tablePassword, setTablePassword] = useState(null);
 
-  const tablePub = table.filter((item) => item.visibility === "public");
-
   const [isHiddenCreateTableModal, setIsHiddenCreateTableModal] =
     useState(false);
   const [isHiddenPasswordModal, setIsHiddenPasswordModal] = useState(false);
 
+  const [EditProfVisible, setEditProfVisible] = useState(false);
+
   if (logado) {
     Private();
-    // console.log(privateTable);
   }
 
   function handleLogout() {
     setLogado(false);
     localStorage.removeItem("@HELLFIRE/userAccess");
+    localStorage.removeItem("@HELLFIRE/userTableList");
+    localStorage.removeItem("@HELLFIRE/userID");
     setLocal(false);
   }
+
+  const nonImage =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU";
 
   if (input && logado) {
     let list = privateTable.filter((elem) => {
@@ -70,19 +75,28 @@ function Home() {
         <nav>
           {logado ? (
             <section>
-              <img
-                src={
-                  userData.perfil
-                    ? userData.perfil
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
-                }
-              />
-              <Title onClick={() => setFiltered([])}>
+              <div>
+                <img src={userData.avatar ? userData.avatar : nonImage} />
+                <span onClick={() => setEditProfVisible(true)}>
+                  Edite seu perfil
+                </span>
+              </div>
+              <Title
+                onClick={() => {
+                  setFiltered([]);
+                }}
+              >
                 Bem vindo(a) {userData.username}!
               </Title>
             </section>
           ) : (
-            <Title onClick={() => setFiltered([])}>A taverna</Title>
+            <Title
+              onClick={() => {
+                setFiltered([]);
+              }}
+            >
+              A taverna
+            </Title>
           )}
 
           <OptionsComponent>
@@ -182,7 +196,13 @@ function Home() {
       )}
 
       <List>
-        {logado ? <h2>Suas mesas</h2> : <h2>Lista de mesas públicas</h2>}
+        {logado && local ? (
+          <h2>Suas mesas</h2>
+        ) : logado && !local ? (
+          <h2>Lista de mesas</h2>
+        ) : (
+          <h2>Lista de mesas públicas</h2>
+        )}
         <ul>
           {local ? (
             <Dashboard
@@ -212,6 +232,11 @@ function Home() {
       <TableModal
         tableVisible={isHiddenCreateTableModal}
         setTableVisible={setIsHiddenCreateTableModal}
+      />
+      <EditProfileModal
+        EditProfVisible={EditProfVisible}
+        setEditProfVisible={setEditProfVisible}
+        userInfo={userData}
       />
     </div>
   );

@@ -1,13 +1,15 @@
-import Rodal from "rodal";
-import "rodal/lib/rodal.css";
-import { InputComponent } from "../Input/style";
-import { ButtonComponent } from "../Button/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaEditProfile } from "../../validators/yup";
+
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
+
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
 import { Container, InputContainer } from "../Modals/style";
+import { InputComponent } from "../Input/style";
+import { ButtonComponent } from "../Button/style";
 
 function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
   function hide() {
@@ -34,7 +36,7 @@ function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
   function onSubmit(formData) {
     console.log(formData);
 
-    baseAPI.patch(`/users?username_like=:${userInfo.username}`, formData, {
+    baseAPI.patch(`/users/${userInfo.id}`, formData, {
       headers: {
         Authorization: `Bearer ${getUserToken}`,
       },
@@ -55,7 +57,7 @@ function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
               type="name"
               name="name"
               {...register("name")}
-              value={userInfo.name}
+              value={userInfo.username}
             />
             <span>{errors.name?.message}</span>
           </InputContainer>
@@ -70,13 +72,8 @@ function EditProfileModal({ EditProfVisible, setEditProfVisible, userInfo }) {
             <span>{errors.email?.message}</span>
           </InputContainer>
           <InputContainer>
-            <label htmlFor="photo">Foto de perfil</label>
-            <InputComponent
-              type="url"
-              name="photo"
-              {...register("photo")}
-              value={userInfo.img}
-            />
+            <label htmlFor="avatar">Foto de perfil</label>
+            <InputComponent type="url" name="avatar" {...register("avatar")} />
             <span>{errors.url?.message}</span>
           </InputContainer>
           <ButtonComponent type="submit">Editar</ButtonComponent>

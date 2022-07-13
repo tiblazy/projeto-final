@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { baseAPI } from "../../apis/api";
@@ -7,6 +7,7 @@ import {
   getUserToken,
   setUserToken,
   userListTables,
+  currentID,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -50,7 +51,11 @@ export const UsersProvider = ({ children }) => {
       .post("/login", data)
       .then((res) => {
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
-        localStorage.setItem(userListTables, JSON.stringify(res.data.user.myTables));
+        localStorage.setItem(currentID, JSON.stringify(res.data.user.id));
+        localStorage.setItem(
+          userListTables,
+          JSON.stringify(res.data.user.myTables)
+        );
         toastSuccess("Login realizado com sucesso!", ROUTES.home);
 
         setLogado(true);
