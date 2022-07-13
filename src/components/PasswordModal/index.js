@@ -49,7 +49,7 @@ export const PasswordModal = ({
   });
 
   const removeError = () =>
-    setInterval(() => {
+    setTimeout(() => {
       setError(null);
     }, 3000);
 
@@ -79,19 +79,28 @@ export const PasswordModal = ({
               {...register("password")}
               InputProps={{
                 endAdornment: isHidden ? (
-                  <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
+                  <AiFillEyeInvisible
+                    onClick={() => setIsHidden(!isHidden)}
+                    style={{ cursor: "pointer" }}
+                  />
                 ) : (
-                  <AiFillEye onClick={() => setIsHidden(!isHidden)} />
+                  <AiFillEye
+                    onClick={() => setIsHidden(!isHidden)}
+                    style={{ cursor: "pointer" }}
+                  />
                 ),
               }}
             />
+            {
+              <span>
+                {error ? (
+                  <> {error} </>
+                ) : errors.password ? (
+                  <> {errors.password?.message}</>
+                ) : null}
+              </span>
+            }
           </InputContainer>
-
-          {error ? (
-            <p>{error}</p>
-          ) : errors.password ? (
-            <p>{errors.password?.message}</p>
-          ) : null}
 
           <ButtonComponent onClick={() => handleSubmit(onSubmit)}>
             Entrar
