@@ -151,7 +151,11 @@ function Table() {
         </div>
       </MesaInfo>
       <MesaContainer>
-        <Collapse title={"Quadro de avisos"} master={master}>
+        <Collapse
+          title={"Quadro de avisos"}
+          master={master}
+          type={"notice_board"}
+        >
           {selectedTable.notice_board
             ? selectedTable.notice_board
             : "Sem avisos por enquanto"}
@@ -165,7 +169,7 @@ function Table() {
             ? selectedTable.notice_board
             : "Sem avisos por enquanto"}
         </TextFieldComponent>
-        <Collapse title={"Lore da mesa"} master={master}>
+        <Collapse title={"Lore da mesa"} master={master} type={"lore"}>
           {selectedTable.lore
             ? selectedTable.lore
             : "Escreva a lore da sua campanha aqui!"}
