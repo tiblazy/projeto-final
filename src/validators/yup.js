@@ -25,3 +25,56 @@ export const schemaRegister = () => {
 
   return schema;
 };
+
+// Modal Table
+
+export const schemaCreateTable = () => {
+  const schema = yup.object().shape({
+    name: yup.string().required("Nome obrigatório"),
+    system: yup.string().required("Sistema obrigatório"),
+    password: yup.string(),
+    confirmPass: yup
+      .string()
+      .oneOf([yup.ref("password")], "Senhas não correspondem"),
+  });
+
+  return schema;
+};
+
+export const schemaPassword = () => {
+  const schema = yup.object().shape({
+    password: yup.string(),
+  });
+
+  return schema;
+};
+
+export const schemaCharacter = () => {
+  const schema = yup.object().shape({
+    name: yup.string().required("Nome obrigatório"),
+    class: yup.string().required("Classe obrigatória"),
+    lore: yup.string().required("Lore obrigatória"),
+    photo: yup.string().optional(),
+  });
+
+  return schema;
+};
+
+export const schemaParticipant = () => {
+  const schema = yup.object().shape({
+    name: yup.string().required("Nome obrigatório"),
+    email: yup.string().email("Formato inválido").required("Email obrigatório"),
+  });
+
+  return schema;
+};
+
+export const schemaEditProfile = () => {
+  const schema = yup.object().shape({
+    name: yup.string().optional(),
+    email: yup.string().optional(),
+    photo: yup.string().optional(),
+  });
+
+  return schema;
+};

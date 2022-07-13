@@ -1,16 +1,19 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 
 import { baseAPI } from "../../apis/api";
 import { getUserToken } from "../../constants/localStorages";
 
-import ROUTES from "../../constants/routes";
 import { toast } from "react-toastify";
+
+import { UsersContext } from "../usersContexts";
 
 export const TablesContext = createContext();
 
 export const TablesProvider = ({ children }) => {
   const [table, setTable] = useState([]);
+  const [privateTable, setPrivateTable] = useState([]);
+  const { userData, logado } = useContext(UsersContext);
 
   const navigate = useNavigate();
 
@@ -44,42 +47,40 @@ export const TablesProvider = ({ children }) => {
       response && setTable(response.data);
     });
   }
+  listTables();
 
-  useEffect(() => {
-    listTables();
-  }, []);
-
-  const tableCreate = async (data, setLoading) => {
-    try {
-      setLoading(true);
-
-      const response = await baseAPI.post("/tables", data, {
-        headers: { Authorization: `bearer ${getUserToken}` },
+  function privateListTables() {
+    baseAPI
+      .get(`/users/${userData.id}?_embed=tables`, {
+        headers: {
+          Authorization: `Bearer ${getUserToken}`,
+        },
+      })
+      .then((response) => {
+        response && setPrivateTable(response.data.tables);
       });
-      toastSuccess("Mesa criada com sucesso");
-    } catch (error) {
-      console.log(error);
-      //   toastError(error)
-    } finally {
-      setLoading(false);
-    }
-  };
+  }
 
-  const tableUpdate = async (id, data, setLoading) => {
-    try {
-      setLoading(true);
+  const Private = privateListTables;
 
-      const response = await baseAPI.patch(`/tables/${id}`, data, {
-        headers: { Authorization: `bearer ${getUserToken}` },
-      });
-      toastSuccess("Mesa atualizada com sucesso");
-    } catch (error) {
-      console.log(error);
-      //   toastError(error)
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const tableCreate = async (data, setLoading) => {
+  //   try {
+  //     setLoading(true);
+
+  //     const response = await baseAPI.post("/tables", data, {
+  //       headers: {
+  //         Authorization: `Bearer ${getUserToken}`,
+  //       },
+  //     });
+  //     console.log(response);
+
+  //     if (response.status == 201) {
+  //       toastSuccess("Mesa criada com sucesso");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const tableDelete = async (id, setLoading) => {
     try {
@@ -99,7 +100,12 @@ export const TablesProvider = ({ children }) => {
 
   return (
     <TablesContext.Provider
-      value={{ tableCreate, tableUpdate, tableDelete, table }}
+      value={{
+        tableDelete,
+        table,
+        privateTable,
+        Private,
+      }}
     >
       {children}
     </TablesContext.Provider>

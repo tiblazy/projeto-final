@@ -11,18 +11,21 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
 
-    width: 100vw;
+   
     height: 100vh;
+    @media(min-width: 500px){
     background-image: url(${Imagem});
-    background-size: 100% 100% ;
+    background-size: cover ;
+    background-position: center;
     background-repeat: no-repeat;
+    }
 
 `
 
 export const Background = styled.div`
     width: 50vw;
     height: 100vh;
-    @media (max-width:500px){
+    @media (max-width:1000px){
         display: none;
     }
 
@@ -30,35 +33,32 @@ export const Background = styled.div`
 
 export const Form = styled.div`
     width: 50vw;
-    min-height: 100%;
+    
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 `
 
 export const Cards = styled.div`
-    width: 60%;
-    min-height: 50vh;
+    width: 100%;
+    @media (min-width:400px) {
+     width: 400px; 
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 30px 35px;
     border-radius: 10px;
-    box-shadow: 0px 10px 40px #00000056;
+    
     background-color: white;
 
-    button{
-        width: 200px;
-        height: 50px;
-        padding: 16px 0px;
-        margin: 25px;
-
-    }
     form{
         display: flex;
+        align-items: center;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         height: 60vh;
     }
     a{
@@ -69,24 +69,19 @@ export const Cards = styled.div`
         font-weight: 400;
         font-size: 30px;
         color: #7E0902;
+        margin-bottom: 30px;
+    }
+    p{
+        color: #7e0902;
+        font-size: 13px;
+        width: 100%;
     }
 
 `
-export const TextField = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
+export const A = styled.div`
+    margin-top: 30px;
+    width: 80vw;
+    
+    text-align: center;
 
-    input{
-        width: 100%;
-        height: 100%;
-        padding: 15px;
-        box-sizing: border-box;
-    }
-    label{
-        margin-bottom:10px
-    }
 `

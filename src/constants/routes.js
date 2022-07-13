@@ -1,8 +1,9 @@
 const ROUTES = {
   home: "/",
-  register: "/register",
   login: "/login",
-  dashboard: "/dashboard",
+  register: "/register",
+  tables: `/tables/:id`,
+  characters: `/characters/:id`,
 };
 
 export default ROUTES;

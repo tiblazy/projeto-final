@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const InputComponent = styled(TextField)`
+width: ${(props) => props.width || "223px"};
   & .MuiInputLabel-root {
     color: #1b2c26;
     &.Mui-focused {
@@ -11,8 +12,10 @@ export const InputComponent = styled(TextField)`
 
   & .MuiInputBase-root {
     background-color: #d3cdc0;
+    border-radius: 8px;
 
     & .MuiInputBase-input {
+
       color: #1b2c26;
     }
   }
@@ -21,5 +24,13 @@ export const InputComponent = styled(TextField)`
     &.Mui-focused fieldset {
       border-color: #7e0902;
     }
+  }
+
+  & .MuiInputBase-root.Mui-disabled {
+    background-color: rgba(211, 205, 192, 0.41);
+  }
+
+  & .MuiInputAdornment-root {
+    width: 20px;
   }
 `;

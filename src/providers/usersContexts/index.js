@@ -6,7 +6,7 @@ import {
   userToken,
   getUserToken,
   setUserToken,
-  removeUserToken,
+  userListTables,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -17,6 +17,8 @@ export const UsersContext = createContext();
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [logado, setLogado] = useState(false);
+  const [userData, setUserData] = useState([]);
 
   const toastSuccess = (message, route) => {
     toast.success(message, {
@@ -43,45 +45,19 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    const autoLogin = async () => {
-      try {
-        // const token = JSON.parse(getUserToken);
-
-        // console.log(`bearer ${token}`);
-
-        // const response = await baseAPI.get("/users", {
-        //   headers: { Authorization: `bearer ${token}` },
-        // });
-        // console.log(response);
-        // setUser(response.data);
-
-        // navigate(ROUTES.dashboard);
-      } catch (error) {
-        console.log(error);
-        // removeUserToken(userToken);
-      }
-    };
-
-    if (getUserToken) {
-      autoLogin();
-      // navigate(ROUTES.dashboard);
-    }
-  }, []);
-
   function login(data, setLoading) {
     baseAPI
       .post("/login", data)
       .then((res) => {
-        console.log(res.data);
-
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
+        localStorage.setItem(userListTables, JSON.stringify(res.data.user.myTables));
+        toastSuccess("Login realizado com sucesso!", ROUTES.home);
 
-        toastSuccess("Login realizado com sucesso!", ROUTES.dashboard);
+        setLogado(true);
+        setUser(res.data.user);
+        setUserData(res.data.user);
       })
       .catch((err) => {
-        console.log(err);
-
         toastError("Login falhou, verifique seu email ou senha!");
       });
   }
@@ -96,7 +72,7 @@ export const UsersProvider = ({ children }) => {
       if (getUserToken) {
         toastSuccess(
           "Usuário criado com sucesso, redirecionando....",
-          ROUTES.dashboard
+          ROUTES.login
         );
       }
     } catch (error) {
@@ -107,7 +83,9 @@ export const UsersProvider = ({ children }) => {
   };
 
   return (
-    <UsersContext.Provider value={{ login, userCreate, user }}>
+    <UsersContext.Provider
+      value={{ login, userCreate, user, logado, userData, setLogado }}
+    >
       {children}
     </UsersContext.Provider>
   );
