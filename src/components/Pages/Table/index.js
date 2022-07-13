@@ -7,6 +7,7 @@ import ROUTES from "../../../constants/routes";
 
 import CharModal from "../../CharModal";
 import ParticipantModal from "../../ParticipantModal";
+import EditProfileModal from "../../EditProfileModal";
 
 import MesaInfo from "../../Mesa-info";
 import { MesaContainer } from "./style";
@@ -24,13 +25,15 @@ function Table() {
   const { id } = useParams();
   const [selectedTable, setSelectedTable] = useState([]);
   const { userData } = useContext(UsersContext);
+  const [personagens, setPersonagens] = useState([]);
 
-  const [master, setMaster] = useState(true);
+  const [master, setMaster] = useState(false);
 
   //alterar esse state para renderizar a tela de jogador e tela de mestre
 
   const [charVisible, setCharVisible] = useState(false);
   const [participantVisible, setParticipantVisible] = useState(false);
+  const [EditProfVisible, setEditProfVisible] = useState(false);
 
   function filtered() {
     let newTable = table.filter((elem) => {
@@ -42,8 +45,30 @@ function Table() {
     filtered();
   }, []);
 
+  function permission() {
+    if (parseInt(selectedTable.userId) === parseInt(userData.id)) {
+      setMaster(true);
+      setPersonagens(selectedTable.characters);
+    } else {
+      // const personagem = selectedTable.characters?.filter((elem) => {
+      //   parseInt(elem.userId) === parseInt(userData.id)
+      // });
+      // setPersonagens(personagem);
+      //   if (personagem.length > 0) {
+
+      //   } else {
+      //colocar botoes disabled
+      //   }
+    }
+  }
+  
+  useEffect(() => {
+    permission();
+  }, [selectedTable]);
+
   function handleLogout() {
     setSelectedTable([]);
+    setMaster(false);
     navigate(home);
   }
   return (
@@ -51,13 +76,18 @@ function Table() {
       <Header>
         <nav>
           <section>
-            <img
-              src={
-                userData.perfil
-                  ? userData.perfil
-                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
-              }
-            />
+            <div>
+              <img
+                src={
+                  userData.avatar
+                    ? userData.avatar
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU"
+                }
+              />
+              <span onClick={() => setEditProfVisible(true)}>
+                Edite seu perfil
+              </span>
+            </div>
             <Title>A Taverna</Title>
           </section>
           {master ? (
@@ -132,6 +162,11 @@ function Table() {
       <ParticipantModal
         participantVisible={participantVisible}
         setParticipantVisible={setParticipantVisible}
+      />
+      <EditProfileModal
+        EditProfVisible={EditProfVisible}
+        setEditProfVisible={setEditProfVisible}
+        userInfo={userData}
       />
     </div>
   );

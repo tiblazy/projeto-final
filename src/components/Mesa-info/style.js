@@ -34,7 +34,7 @@ export const Container = styled.div`
       display: flex;
       flex-direction: column;
       height: 17vh;
-      width: 30vw;
+      width: 20vw;
       text-align: center;
 
       h2 {
@@ -42,7 +42,7 @@ export const Container = styled.div`
       }
     }
     div {
-      width: 20vw;
+      width: 17vw;
       display: flex;
       flex-direction: column;
       height: 17vh;

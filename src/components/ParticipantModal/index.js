@@ -8,13 +8,13 @@ import { baseAPI } from "../../apis/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaParticipant } from "../../validators/yup";
-
-import { toast } from "react-toastify";
+import { Container, InputContainer } from "../Modals/style";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
 import { InputComponent } from "../Input/style";
 import { ButtonComponent } from "../Button/style";
-import { Container, InputContainer } from "../Modals/style";
+
+import { toast } from "react-toastify";
 
 function ParticipantModal({ participantVisible, setParticipantVisible }) {
   function hide() {

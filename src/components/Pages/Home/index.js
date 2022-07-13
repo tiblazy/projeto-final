@@ -16,6 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { ButtonComponent } from "../../Button/style";
+import EditProfileModal from "../../EditProfileModal";
 
 function Home() {
   const { logado, userData, setLogado } = useContext(UsersContext);
@@ -32,6 +33,8 @@ function Home() {
   const [isHiddenCreateTableModal, setIsHiddenCreateTableModal] =
     useState(false);
   const [isHiddenPasswordModal, setIsHiddenPasswordModal] = useState(false);
+
+  const [EditProfVisible, setEditProfVisible] = useState(false);
 
   if (logado) {
     Private();
@@ -73,7 +76,12 @@ function Home() {
         <nav>
           {logado ? (
             <section>
-              <img src={userData.perfil ? userData.perfil : nonImage} />
+              <div>
+                <img src={userData.avatar ? userData.avatar : nonImage} />
+                <span onClick={() => setEditProfVisible(true)}>
+                  Edite seu perfil
+                </span>
+              </div>
               <Title
                 onClick={() => {
                   setFiltered([]);
@@ -225,6 +233,11 @@ function Home() {
       <TableModal
         tableVisible={isHiddenCreateTableModal}
         setTableVisible={setIsHiddenCreateTableModal}
+      />
+      <EditProfileModal
+        EditProfVisible={EditProfVisible}
+        setEditProfVisible={setEditProfVisible}
+        userInfo={userData}
       />
     </div>
   );

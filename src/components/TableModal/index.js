@@ -73,8 +73,8 @@ function TableModal({ tableVisible, setTableVisible }) {
     resolver: yupResolver(formSchema),
   });
 
-  const ownerId = localStorage.getItem("@HELLFIRE/currentID");
-  const ownerName = localStorage.getItem("@HELLFIRE/currentUsername");
+  const ownerId = localStorage.getItem("@HELLFIRE/userID");
+  const ownerName = localStorage.getItem("@HELLFIRE/username");
 
   async function onSubmit(formData) {
     reset();
@@ -92,7 +92,7 @@ function TableModal({ tableVisible, setTableVisible }) {
       tablename: formData.name,
       visibility: formData.visibility,
       password: formData.password,
-      userId: ownerId,
+      userId: parseInt(ownerId),
       username: ownerName,
       system: formData.system,
       image: null,
