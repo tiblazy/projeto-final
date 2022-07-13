@@ -25,10 +25,11 @@ export const Container = styled.div`
     }
   }
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 860px) {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    width: 100vw;
 
     section {
       display: flex;

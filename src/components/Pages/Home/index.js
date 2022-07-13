@@ -99,10 +99,12 @@ function Home() {
               A taverna
             </Title>
           )}
-
           <OptionsComponent>
             {logado ? (
-              <div>
+              <>
+                <ButtonComponent onClick={() => setLocal(!local)}>
+                  {local ? "Descobrir" : "Suas mesas"}
+                </ButtonComponent>
                 <ButtonComponent
                   onClick={() =>
                     setIsHiddenCreateTableModal(!isHiddenCreateTableModal)
@@ -113,24 +115,19 @@ function Home() {
                 <ButtonComponent onClick={() => handleLogout()}>
                   Logout
                 </ButtonComponent>
-              </div>
+              </>
             ) : (
-              <div>
+              <>
                 <ButtonComponent onClick={() => navigate(register)}>
                   Cadastro
                 </ButtonComponent>
                 <ButtonComponent onClick={() => navigate(login)}>
                   Login
                 </ButtonComponent>
-              </div>
+              </>
             )}
           </OptionsComponent>
         </nav>
-        {logado && (
-          <h2 onClick={() => setLocal(!local)}>
-            {local ? "Descobrir" : "Suas mesas"}
-          </h2>
-        )}
 
         <TextField
           sx={{ backgroundColor: "#D3CDC0" }}
@@ -146,6 +143,9 @@ function Home() {
         />
         {logado ? (
           <section>
+            <ButtonComponent onClick={() => setLocal(!local)}>
+              {local ? "Descobrir" : "Suas mesas"}
+            </ButtonComponent>
             <ButtonComponent
               heigth={"52px"}
               width={"186px"}
