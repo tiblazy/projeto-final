@@ -30,8 +30,6 @@ function Table() {
 
   const [master, setMaster] = useState(false);
 
-  //alterar esse state para renderizar a tela de jogador e tela de mestre
-
   const [charVisible, setCharVisible] = useState(false);
   const [participantVisible, setParticipantVisible] = useState(false);
   const [EditProfVisible, setEditProfVisible] = useState(false);
@@ -163,62 +161,28 @@ function Table() {
           title={"Quadro de avisos"}
           master={master}
           type={"notice_board"}
-        >
-          {selectedTable.notice_board
-            ? selectedTable.notice_board
-            : "Sem avisos por enquanto"}
-        </Collapse>
+          children={selectedTable.notice_board}
+        />
         <TextFieldComponent
           title={"Quadro de avisos"}
           master={master}
           type={"notice_board"}
-        >
-          {selectedTable.notice_board
-            ? selectedTable.notice_board
-            : "Sem avisos por enquanto"}
-        </TextFieldComponent>
-        <Collapse title={"Lore da mesa"} master={master} type={"lore"}>
-          {selectedTable.lore
-            ? selectedTable.lore
-            : "Escreva a lore da sua campanha aqui!"}
-        </Collapse>
+          children={selectedTable.notice_board}
+        />
+        <Collapse
+          title={"Lore da mesa"}
+          master={master}
+          type={"lore"}
+          children={selectedTable.lore}
+        />
         <TextFieldComponent
           title={"Lore da mesa"}
           master={master}
           type={"lore"}
-        >
-          {selectedTable.lore
-            ? selectedTable.lore
-            : "Escreva a lore da sua campanha aqui!"}
-        </TextFieldComponent>
-        <Collapse
-          title={"Detalhes da mesa"}
-          master={master}
-          // children={[
-          //   selectedTable.image,
-          //   selectedTable.maxParticipants,
-          //   selectedTable.system,
-          //   selectedTable.tablename,
-          //   selectedTable.visibility,
-          // ]}
-        ></Collapse>
-        <TextFieldComponent title={"Detalhes da mesa"} master={master}>
-          {/* {selectedTable.image
-            ? selectedTable.image
-            : "Cole aqui o link de uma imagem de capa"}
-          {selectedTable.maxParticipants
-            ? selectedTable.maxParticipants
-            : "Altere o maximo de participantes da mesa"}
-          {selectedTable.system
-            ? selectedTable.system
-            : "Altere o sistema de jogo da sua mesa"}
-          {selectedTable.tablename
-            ? selectedTable.tablename
-            : "Altere o nome da sua mesa"}
-          {selectedTable.visibility
-            ? selectedTable.visibility
-            : "Altere o a visibilidade da sua mesa"} */}
-        </TextFieldComponent>
+          children={selectedTable.lore}
+        />
+        <Collapse title={"Detalhes da mesa"} master={master} />
+        <TextFieldComponent title={"Detalhes da mesa"} master={master} />
       </MesaContainer>
       <CharModal charVisible={charVisible} setCharVisible={setCharVisible} />
       <ParticipantModal

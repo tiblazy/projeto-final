@@ -7,7 +7,7 @@ import { baseAPI } from "../../apis/api";
 import { toast } from "react-toastify";
 import { getUserToken } from "../../constants/localStorages";
 
-const TextFieldComponent = ({ title, master, children = null, type }) => {
+const TextFieldComponent = ({ title, master, children, type }) => {
   const [active, setActive] = useState(true);
   const [input, setInput] = useState("");
 
@@ -24,17 +24,14 @@ const TextFieldComponent = ({ title, master, children = null, type }) => {
       progress: undefined,
     });
   };
-  // console.log(type);
+
   function handleClick(type) {
-    console.log(type);
     const objeto = {};
     objeto[type] = input;
     const response = baseAPI.patch(`/tables/${id}`, objeto, {
       headers: { Authorization: `Bearer ${getUserToken}` },
     });
     toastSuccess("Mesa atualizada com sucesso");
-
-    console.log(response);
   }
 
   return (
@@ -58,9 +55,8 @@ const TextFieldComponent = ({ title, master, children = null, type }) => {
         disabled={active}
         border={active ? "none" : "1px solid #d3cdc0"}
         onChange={(event) => setInput(event.target.value)}
-      >
-        {children}
-      </textarea>
+        children={children}
+      />
     </Div>
   );
 };

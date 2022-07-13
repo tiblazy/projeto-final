@@ -64,9 +64,8 @@ const Collapse = ({ children, title, master, type }) => {
           disabled={active}
           border={active ? "none" : "1px solid #d3cdc0"}
           onChange={(event) => setInput(event.target.value)}
-        >
-          {children}
-        </TextArea>
+          children={children}
+        ></TextArea>
       </details>
     </DivMain>
   );
