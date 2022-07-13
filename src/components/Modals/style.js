@@ -30,7 +30,7 @@ export const Container = styled.div`
 `;
 
 export const InputContainer = styled.div`
-  width: 80%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -52,7 +52,7 @@ export const InputContainer = styled.div`
 
 export const CheckBoxContainer = styled.div`
   margin: 3% 0;
-  margin-left: 10%;
+  margin-left: 15%;
 
   input {
     background-color: black;

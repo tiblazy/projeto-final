@@ -9,6 +9,12 @@ export const Card = styled.div`
   justify-content: center;
   padding: 10px 15px 5px 15px;
   margin-bottom: 20px;
+  cursor: pointer;
+  transition: 150ms;
+
+  &:hover {
+    background-color: #d4c6ab;
+  }
 
   section {
     background-image: url(${(props) => props.image});
