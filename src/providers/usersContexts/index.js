@@ -8,6 +8,7 @@ import {
   setUserToken,
   userListTables,
   currentID,
+  currentUsername,
 } from "../../constants/localStorages";
 
 import ROUTES from "../../constants/routes";
@@ -52,6 +53,11 @@ export const UsersProvider = ({ children }) => {
       .then((res) => {
         localStorage.setItem(userToken, JSON.stringify(res.data.accessToken));
         localStorage.setItem(currentID, JSON.stringify(res.data.user.id));
+        localStorage.setItem(
+          currentUsername,
+          JSON.stringify(res.data.user.username)
+        );
+
         localStorage.setItem(
           userListTables,
           JSON.stringify(res.data.user.myTables)

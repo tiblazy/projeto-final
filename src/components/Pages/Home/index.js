@@ -42,6 +42,7 @@ function Home() {
     localStorage.removeItem("@HELLFIRE/userAccess");
     localStorage.removeItem("@HELLFIRE/userTableList");
     localStorage.removeItem("@HELLFIRE/userID");
+    localStorage.removeItem("@HELLFIRE/username");
     setLocal(false);
   }
 
