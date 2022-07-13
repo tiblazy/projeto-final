@@ -56,3 +56,13 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const Card = styled.li`
+  border: 1px solid #c2b59d;
+  background-color: #d3cdc0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+`;
