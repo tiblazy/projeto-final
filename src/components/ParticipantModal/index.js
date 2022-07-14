@@ -81,9 +81,13 @@ function ParticipantModal({ participantVisible, setParticipantVisible }) {
         <h1>Adicione um participante</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputContainer>
-            <label htmlFor="name">Nome do participante</label>
-            <InputComponent type="name" name="name" {...register("name")} />
-            <span>{errors.name?.message}</span>
+            <label htmlFor="username">Nome do participante</label>
+            <InputComponent
+              type="username"
+              name="username"
+              {...register("username")}
+            />
+            <span>{errors.username?.message}</span>
           </InputContainer>
           <InputContainer>
             <label htmlFor="email">Email</label>

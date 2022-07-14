@@ -134,6 +134,7 @@ function Table() {
       <MesaInfo
         personagens={personagens}
         participants={selectedTable.participants}
+        filtered={filtered}
       >
         <section>
           <h2>{selectedTable.tablename}</h2>

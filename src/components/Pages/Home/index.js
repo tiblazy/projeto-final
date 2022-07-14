@@ -25,7 +25,6 @@ function Home() {
   const { login, register } = ROUTES;
   const [filtered, setFiltered] = useState([]);
   const [local, setLocal] = useState(false);
-  const [input, setInput] = useState("");
 
   const [tableId, setTableId] = useState(null);
   const [tablePassword, setTablePassword] = useState(null);
@@ -52,22 +51,22 @@ function Home() {
   const nonImage =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU";
 
-  if (input && logado) {
-    let list = privateTable.filter((elem) => {
-      let lower = elem.tablename.toLowerCase();
-      let Lower = input.toLocaleLowerCase();
-      return lower.includes(Lower);
-    });
-    setInput("");
-    return setFiltered(list);
-  } else if (input && !logado) {
-    let list = table.filter((elem) => {
-      let lower = elem.tablename.toLowerCase();
-      let Lower = input.toLocaleLowerCase();
-      return lower.includes(Lower);
-    });
-    setInput("");
-    return setFiltered(list);
+  function filtrar(input) {
+    if (local) {
+      let list = privateTable.filter((elem) => {
+        let lower = elem.tablename.toLowerCase();
+        let Lower = input.toLocaleLowerCase();
+        return lower.includes(Lower);
+      });
+      setFiltered(list);
+    } else if (!local) {
+      let list = table.filter((elem) => {
+        let lower = elem.tablename.toLowerCase();
+        let Lower = input.toLocaleLowerCase();
+        return lower.includes(Lower);
+      });
+      setFiltered(list);
+    }
   }
 
   return (
@@ -135,7 +134,9 @@ function Home() {
         <TextField
           sx={{ backgroundColor: "#D3CDC0" }}
           placeholder="Pesquisar mesa..."
-          onChange={(event) => setInput(event.target.value)}
+          onKeyUp={(e) => {
+            filtrar(e.target.value);
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

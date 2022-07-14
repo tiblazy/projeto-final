@@ -62,7 +62,7 @@ export const schemaCharacter = () => {
 
 export const schemaParticipant = () => {
   const schema = yup.object().shape({
-    name: yup.string().required("Nome obrigatório"),
+    username: yup.string().required("Nome obrigatório"),
     email: yup.string().email("Formato inválido").required("Email obrigatório"),
   });
 

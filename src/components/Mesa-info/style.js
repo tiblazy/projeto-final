@@ -59,6 +59,7 @@ export const Container = styled.div`
 `;
 
 export const Card = styled.li`
+  width: 200px;
   border: 1px solid #c2b59d;
   background-color: #d3cdc0;
   display: flex;

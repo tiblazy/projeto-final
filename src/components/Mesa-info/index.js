@@ -46,7 +46,9 @@ function MesaInfo({ children, personagens, participants }) {
       <Rodal
         customStyles={customStyles}
         visible={modal}
-        onClose={() => setModal(!modal)}
+        onClose={() => {
+          setModal(!modal);
+        }}
       >
         <ul
           style={{
@@ -54,7 +56,7 @@ function MesaInfo({ children, personagens, participants }) {
             display: "flex",
             flexDirection: "column",
             gap: "10px",
-            justifyContent: "center",
+            paddingTop: "10px 0px",
             alignItems: "center",
             overflow: "auto",
           }}
@@ -64,7 +66,7 @@ function MesaInfo({ children, personagens, participants }) {
               <Card
                 key={i}
                 onClick={() =>
-                  elem.name &&
+                  elem.classe &&
                   navigate(`characters/${elem.name}`, { state: elem })
                 }
               >
