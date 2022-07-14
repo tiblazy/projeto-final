@@ -40,9 +40,6 @@ function Table() {
     });
     return setSelectedTable(newTable[0]);
   }
-  useEffect(() => {
-    filtered();
-  }, []);
 
   const nonImage =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVtcuK-vJbBmZO2CV_3qOjfqCXr4CEtFU-w&usqp=CAU";
@@ -67,7 +64,10 @@ function Table() {
 
   useEffect(() => {
     permission();
+    filtered();
   }, [selectedTable]);
+
+  // console.log(selectedTable);
 
   function handleLogout() {
     setSelectedTable([]);

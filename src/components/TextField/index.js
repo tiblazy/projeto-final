@@ -7,7 +7,13 @@ import { baseAPI } from "../../apis/api";
 import { toast } from "react-toastify";
 import { getUserToken } from "../../constants/localStorages";
 
-const TextFieldComponent = ({ title, master, children, type }) => {
+const TextFieldComponent = ({
+  title,
+  master,
+  children,
+  type,
+  page = false,
+}) => {
   const [active, setActive] = useState(true);
   const [input, setInput] = useState("");
 
@@ -26,12 +32,21 @@ const TextFieldComponent = ({ title, master, children, type }) => {
   };
 
   function handleClick(type) {
-    const objeto = {};
-    objeto[type] = input;
-    const response = baseAPI.patch(`/tables/${id}`, objeto, {
-      headers: { Authorization: `Bearer ${getUserToken}` },
-    });
-    toastSuccess("Mesa atualizada com sucesso");
+    if (!page) {
+      const objeto = {};
+      objeto[type] = input;
+      const response = baseAPI.patch(`/tables/${id}`, objeto, {
+        headers: { Authorization: `Bearer ${getUserToken}` },
+      });
+      toastSuccess("Mesa atualizada com sucesso");
+    } else {
+      const objeto = { characters: null };
+      objeto.characters[type] = input;
+      const response = baseAPI.patch(`/tables/${id}`, objeto, {
+        headers: { Authorization: `Bearer ${getUserToken}` },
+      });
+      toastSuccess("Mesa atualizada com sucesso");
+    }
   }
 
   return (
@@ -51,12 +66,22 @@ const TextFieldComponent = ({ title, master, children, type }) => {
         </div>
       </div>
 
-      <textarea
-        disabled={active}
-        border={active ? "none" : "1px solid #d3cdc0"}
-        onChange={(event) => setInput(event.target.value)}
-        children={children}
-      />
+      {page ? (
+        <textarea
+          disabled={active}
+          border={active ? "none" : "1px solid #d3cdc0"}
+          onChange={(event) => setInput(event.target.value)}
+          children={children}
+        />
+      ) : (
+        <textarea
+          disabled={active}
+          border={active ? "none" : "1px solid #d3cdc0"}
+          onChange={(event) => setInput(event.target.value)}
+          children={children}
+          defaultValue={children}
+        />
+      )}
     </Div>
   );
 };

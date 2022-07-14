@@ -30,6 +30,10 @@ export const TablesProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    listTables();
+  }, [table]);
+
   const toastError = (message) => {
     toast.error(message, {
       position: "top-right",

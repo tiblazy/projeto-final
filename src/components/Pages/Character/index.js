@@ -12,7 +12,17 @@ const Character = () => {
 
   const { home } = ROUTES;
 
-  console.log(state);
+  if (state.atributtes) {
+    state.atributtes = JSON.stringify(state.atributtes);
+  }
+
+  if (!state.lore) {
+    state.lore = "vazio";
+  }
+
+  if (state.bag.length === 0) {
+    state.bag = "vazio";
+  }
 
   return (
     <>
@@ -27,25 +37,59 @@ const Character = () => {
         </ButtonComponent>
       </Header>
       <CharInfo>
-        <img src="https://steamuserimages-a.akamaihd.net/ugc/585783733698585290/7F498B23660D38D243734B03149F28C28952DC13/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" />
+        <img
+          alt="avatar"
+          src={
+            state.image
+              ? state.image
+              : "https://steamuserimages-a.akamaihd.net/ugc/585783733698585290/7F498B23660D38D243734B03149F28C28952DC13/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+          }
+        />
         <section>
-          <h2>Nome do personagem</h2>
-          <p>Classe: </p>
-          <p>Idade: </p>
+          <h2>{state.name}</h2>
+          <p>Classe: {state.classe}</p>
+          <p>Idade: {state.idade}</p>
         </section>
       </CharInfo>
       <CharacterContainer>
-        <Collapse master={true} title={"Atributos"}></Collapse>
-        <Collapse master={true} title={"Lore"}></Collapse>
-        <Collapse master={true} title={"Mochila"}></Collapse>
-        <TextFieldComponent
+        <Collapse
           master={true}
           title={"Atributos"}
-        ></TextFieldComponent>
-        <TextFieldComponent master={true} title={"Lore"}></TextFieldComponent>
-        <TextFieldComponent
+          type={"atributtes"}
+          children={state.atributtes}
+        ></Collapse>
+        <Collapse
+          master={true}
+          title={"Lore"}
+          type={"lore"}
+          children={state.lore}
+        ></Collapse>
+        <Collapse
           master={true}
           title={"Mochila"}
+          type={"bag"}
+          children={state.bag}
+        ></Collapse>
+        <TextFieldComponent
+          page={true}
+          master={true}
+          title={"Atributos"}
+          type={"atributtes"}
+          children={state.atributtes}
+        ></TextFieldComponent>
+        <TextFieldComponent
+          page={true}
+          master={true}
+          title={"Lore"}
+          type={"lore"}
+          children={state.lore}
+        ></TextFieldComponent>
+        <TextFieldComponent
+          page={true}
+          master={true}
+          title={"Mochila"}
+          type={"bag"}
+          children={state.bag}
         ></TextFieldComponent>
       </CharacterContainer>
     </>
