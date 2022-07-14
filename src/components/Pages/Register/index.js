@@ -9,12 +9,15 @@ import { schemaRegister } from "../../../validators/yup";
 import { Container, Form, Background, Cards, A } from "./style";
 import { InputComponent } from "../../Input/style";
 import { ButtonComponent } from "../../Button/style";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import VisibilityOffOutlined from "@mui/icons-material/VisibilityOffOutlined";
+import VisibilityOutlined from "@mui/icons-material/VisibilityOutlined";
+import EmailIcon from "@mui/icons-material/Email";
+import { IconButton, InputAdornment } from "@mui/material";
 
 import ROUTES from "../../../constants/routes";
 
 export const Register = () => {
-  const [isHidden, setIsHidden] = useState(false);
+  const [reveal, setReveal] = useState(false);
   const { userCreate } = useContext(UsersContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -57,58 +60,84 @@ export const Register = () => {
           <h1> Cadastro </h1>
           <form onSubmit={handleSubmit(onRegisterFunction)}>
             <InputComponent
-              width="270px"
               label="Nome"
               placeholder="insira seu usuário"
               {...register("name")}
+              error={errors.name && true}
+              helperText={errors.name?.message && errors.name?.message}
+              type={"text"}
             />
-            <p>{errors.name?.message}</p>
 
             <InputComponent
-              width="270px"
               label="Email"
               placeholder="insira seu email"
               {...register("email")}
+              error={errors.email && true}
+              helperText={errors.email?.message && errors.email?.message}
+              type={"text"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton sx={{ cursor: "default" }}>
+                      <EmailIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
-            <p>{errors.email?.message}</p>
 
             <InputComponent
-              width="270px"
               label="password"
               placeholder="insira seu password"
-              type={isHidden ? "text" : "password"}
               {...register("password")}
+              error={errors.password && true}
+              helperText={errors.password?.message && errors.password?.message}
+              type={reveal ? "text" : "password"}
               InputProps={{
-                endAdornment: isHidden ? (
-                  <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
-                ) : (
-                  <AiFillEye onClick={() => setIsHidden(!isHidden)} />
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setReveal(!reveal)}>
+                      {reveal ? (
+                        <VisibilityOffOutlined />
+                      ) : (
+                        <VisibilityOutlined />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
                 ),
               }}
             />
-            <p>{errors.password?.message}</p>
 
             <InputComponent
-              width="270px"
               label="confirme sua senha"
               placeholder="confirme sua senha"
-              type={isHidden ? "text" : "password"}
               {...register("confirmPassword")}
+              error={errors.confirmPassword && true}
+              helperText={
+                errors.confirmPassword?.message &&
+                errors.confirmPassword?.message
+              }
+              type={reveal ? "text" : "password"}
               InputProps={{
-                endAdornment: isHidden ? (
-                  <AiFillEyeInvisible onClick={() => setIsHidden(!isHidden)} />
-                ) : (
-                  <AiFillEye onClick={() => setIsHidden(!isHidden)} />
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setReveal(!reveal)}>
+                      {reveal ? (
+                        <VisibilityOffOutlined />
+                      ) : (
+                        <VisibilityOutlined />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
                 ),
               }}
             />
-            <p>{errors.confirmPassword?.message}</p>
 
             <ButtonComponent height="60px">Cadastrar</ButtonComponent>
           </form>
           <A>
             Já possui cadastro? clique
-            <a onClick={() => navigate(login)}> aqui </a> para fazer login
+            <span onClick={() => navigate(login)}> aqui </span> para fazer login
           </A>
         </Cards>
       </Form>

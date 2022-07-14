@@ -4,7 +4,6 @@ import Rodal from "rodal";
 import { ButtonComponent } from "../Button/style";
 import { Container, Card } from "./style";
 import "rodal/lib/rodal.css";
-import ROUTES from "../../constants/routes";
 
 function MesaInfo({ children, personagens, participants }) {
   const [modal, setModal] = useState(false);

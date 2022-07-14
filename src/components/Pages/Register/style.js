@@ -2,10 +2,6 @@ import styled from "styled-components";
 import Imagem from "../../../img/cadastro.jpg";
 
 export const Container = styled.div`
-  * {
-    font-family: "Merienda", cursive;
-  }
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,10 +51,12 @@ export const Cards = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
     height: 60vh;
   }
-  a {
+  span {
+    font-weight: 700;
     color: #932b2a;
     cursor: pointer;
   }
